@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="AuctionBackJEE:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>AuctionBackJEE</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="auctionbackjee-0.0.1-SNAPSHOT.war">
+      <element id="artifact" artifact-name="AuctionBackJEE:war exploded" />
+    </root>
+  </artifact>
+</component>
