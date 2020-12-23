@@ -1,9 +1,11 @@
 package controllers;
 
+import bindings.JWTTokenNeeded;
 import configuration.JWTKey;
 import dto.LoginUserDto;
 import dto.RegisterUserDto;
 import entities.User;
+import filters.JWTTokenNeededFilter;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import services.UserService;
@@ -13,14 +15,8 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.*;
+import javax.ws.rs.core.*;
 
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
@@ -67,20 +63,28 @@ public class UserController {
             return Response.status(401, "Passwords for user " +
                     user.getUsername() + " do not match.").build();
         }
-        return Response.ok("{\n\"token\":\"" + this.issueToken(user.getUsername()) +
+        return Response.ok("{\n\"token\":\"" + this.issueToken(this.userService.getUser(user.getUsername())) +
                 "\"\n}", MediaType.APPLICATION_JSON).build();
     }
 
-    private String issueToken(String login) throws NoSuchAlgorithmException {
+    @GET
+    @JWTTokenNeeded
+    public Response getLoggedInUser(@Context SecurityContext securityContext) {
+        JWTTokenNeededFilter.UserInfo user = (JWTTokenNeededFilter.UserInfo)securityContext.getUserPrincipal();
+        return Response.ok("{\n\"username\":\"" + user.getName() +
+                "\"\n}", MediaType.APPLICATION_JSON).build();
+    }
+
+    private String issueToken(User user) {
         String keyString = JWTKey.key;
         Key key = new SecretKeySpec(keyString.getBytes(), 0, keyString.getBytes().length, "AES");
         return Jwts.builder()
-                .setSubject(login)
+                .setSubject(user.getUsername())
                 .setIssuer(uri.getAbsolutePath().toString() + "/login")
                 .setIssuedAt(new Date())
                 .setExpiration(Date.from(LocalDateTime.now().plusMinutes(15L).atZone(ZoneId.systemDefault()).toInstant()))
+                .claim("username", user.getUsername())
                 .signWith(SignatureAlgorithm.HS512, key)
-                .claim("username", login)
                 .compact();
     }
 

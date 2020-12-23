@@ -1,12 +1,12 @@
 package services;
 
+import dao.UserDao;
 import dto.LoginUserDto;
 import dto.RegisterUserDto;
 import entities.User;
 
 import javax.ejb.Singleton;
 import javax.inject.Inject;
-import javax.persistence.*;
 import java.util.List;
 
 @Singleton
@@ -15,26 +15,16 @@ public class UserServiceImpl implements UserService {
     @Inject
     private HashingService hashService;
 
-    @PersistenceUnit
-    private final EntityManagerFactory emfactory;
-    @PersistenceContext
-    EntityManager entitymanager;
-
-    public UserServiceImpl() {
-        emfactory = Persistence.createEntityManagerFactory("Auctions");
-        entitymanager = emfactory.createEntityManager();
-    }
+    @Inject
+    private UserDao userdao;
 
     @Override
     public User register(RegisterUserDto newUser) {
         String hashedPassword = this.hashService.hashPassword(newUser.getPassword());
-        TypedQuery<User> query = entitymanager.createQuery(
-                "SELECT u FROM User AS u WHERE u.username = :username", User.class)
-                .setParameter("username", newUser.getUsername());
-        List<User> results = query.getResultList();
+        List<User> results = this.userdao.findByUserName(newUser.getUsername());
         if (results.isEmpty()) {
             User user = new User(newUser.getUsername(), hashedPassword);
-            this.entitymanager.persist(user);
+            user = this.userdao.save(user);
             return user;
         }
         return null;
@@ -42,13 +32,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean login(LoginUserDto user) {
-        TypedQuery<User> query = entitymanager.createQuery(
-                "SELECT u FROM User AS u WHERE u.username = :username", User.class)
-                .setParameter("username", user.getUsername());
-        List<User> results = query.getResultList();
+        List<User> results = this.userdao.findByUserName(user.getUsername());
         if (!results.isEmpty()) {
             String storedPass = results.get(0).getPassword();
             return this.hashService.validatePassword(user.getPassword(), storedPass);
+        }
+        return null;
+    }
+
+    @Override
+    public User getUser(String username) {
+        List<User> results = this.userdao.findByUserName(username);
+        if (!results.isEmpty()) {
+            return results.get(0);
         }
         return null;
     }

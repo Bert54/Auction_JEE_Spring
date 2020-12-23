@@ -1,11 +1,10 @@
-package entities;
+package com.ul.gla.auctionbackspring.entities;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
-@Table(name = "user")
-public class User implements Serializable {
+@Table(name = "User")
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

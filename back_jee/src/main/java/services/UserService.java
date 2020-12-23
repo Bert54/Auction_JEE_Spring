@@ -13,4 +13,6 @@ public interface UserService {
 
     public Boolean login(LoginUserDto user);
 
+    public User getUser(String username);
+
 }
