@@ -1,0 +1,40 @@
+<section *ngIf="hasError">
+  <p>
+    <strong>&nbsp;{{ errorContent }}</strong>
+  </p>
+</section>
+<section>
+  <form [formGroup]="form" >
+    <legend>Log in</legend>
+    <mat-divider></mat-divider>
+    <p>
+      <mat-form-field appearance="outline" [class.mgb15]="form.get('username').dirty && form.get('username').invalid">
+        <mat-label>Username</mat-label>
+        <input matInput placeholder="Username" formControlName="username" required name="username" />
+        <mat-error *ngIf="form.get('username').dirty && form.get('username').hasError('required')">
+          Username is required
+        </mat-error>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="outline" [class.mgb15]="form.get('password').dirty && form.get('password').invalid">
+        <mat-label>Password</mat-label>
+        <input matInput placeholder="Password" formControlName="password" required name="password" [type]="hide ? 'password' : 'text'" />
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="form.get('password').dirty && form.get('password').hasError('required')">
+          Password is required
+        </mat-error>
+      </mat-form-field>
+    </p>
+    <p>
+      <button mat-button [disabled]="form.invalid" (click)="login(form.value)">
+        Login
+        <mat-icon>login</mat-icon>
+      </button>
+    </p>
+  </form>
+  <mat-divider></mat-divider>
+  <p ><i>Don't have an account? <a [routerLink]="['/signup']">Click here</a> to sign up.</i></p>
+</section>

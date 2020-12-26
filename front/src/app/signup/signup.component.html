@@ -1,0 +1,60 @@
+<section *ngIf="!registrationSuccess">
+<section *ngIf="hasError">
+  <p>
+    <strong>&nbsp;{{ errorContent }}</strong>
+  </p>
+</section>
+<section>
+  <form [formGroup]="form">
+    <p>
+      <legend>Register</legend>
+      <mat-divider></mat-divider>
+      <mat-form-field appearance="outline" [class.mgb15]="form.get('username').dirty && form.get('username').invalid">
+        <mat-label>Username</mat-label>
+        <input matInput placeholder="Username" formControlName="username" required name="username" />
+        <mat-error *ngIf="form.get('username').dirty && form.get('username').hasError('required')">
+          Username is required
+        </mat-error>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="outline" [class.mgb15]="form.get('password').dirty && form.get('password').invalid">
+        <mat-label>Password</mat-label>
+        <input matInput placeholder="Password" formControlName="password" required name="password" [type]="hide ? 'password' : 'text'" />
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="form.get('password').dirty && form.get('password').hasError('required')">
+          Password is required
+        </mat-error>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="outline" [class.mgb15]="form.get('cpassword').dirty && form.get('cpassword').invalid">
+        <mat-label>Confirm password</mat-label>
+        <input matInput placeholder="Cpassword" formControlName="cpassword" name="cpassword" [errorStateMatcher]="_matcher" [type]="hideC ? 'password' : 'text'" />
+        <button mat-icon-button matSuffix (click)="hideC = !hideC" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hideC">
+          <mat-icon>{{hideC ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="form.get('cpassword').dirty && form.hasError('notSame')">
+          Passwords must match
+        </mat-error>
+      </mat-form-field>
+    </p>
+    <p>
+      <button mat-button (click)="signup(form.value)" [disabled]="form.invalid">
+        Signup
+        <mat-icon>arrow_circle_up</mat-icon>
+      </button>
+    </p>
+  </form>
+  <mat-divider></mat-divider>
+  <p><i>Already have an account? <a [routerLink]="['/login']">Click here</a> to log in.</i></p>
+</section>
+</section>
+<section *ngIf="registrationSuccess">
+  <span>
+    <p>Registration success! You may now log in.</p>
+    <a [routerLink]="['/login']">Go to the login page</a>
+  </span>
+</section>

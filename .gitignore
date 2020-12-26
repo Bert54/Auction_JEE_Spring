@@ -1,3 +1,6 @@
 back_jee/target/
 back_jee/.idea/
 back_spring/.idea/
+front/.idea/
+front/node_modules/
+front/yarn.lock
