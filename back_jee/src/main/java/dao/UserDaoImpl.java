@@ -1,27 +1,22 @@
 package dao;
 
+import configuration.EntityManagerProvider;
 import entities.User;
 
 import javax.ejb.Singleton;
+import javax.inject.Inject;
 import javax.persistence.*;
 import java.util.List;
 
 @Singleton
 public class UserDaoImpl implements UserDao {
 
-    @PersistenceUnit
-    private final EntityManagerFactory emfactory;
-    @PersistenceContext
-    EntityManager entitymanager;
-
-    public UserDaoImpl() {
-        emfactory = Persistence.createEntityManagerFactory("Auctions");
-        entitymanager = emfactory.createEntityManager();
-    }
+    @Inject
+    private EntityManagerProvider entityManager;
 
     @Override
     public List<User> findByUserName(String username) {
-        TypedQuery<User> query = entitymanager.createQuery(
+        TypedQuery<User> query = this.entityManager.getEntityManager().createQuery(
                 "SELECT u FROM User AS u WHERE u.username = :username", User.class)
                 .setParameter("username", username);
         return query.getResultList();
@@ -29,7 +24,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User save(User user) {
-        this.entitymanager.persist(user);
+        this.entityManager.getEntityManager().persist(user);
         return user;
     }
 }

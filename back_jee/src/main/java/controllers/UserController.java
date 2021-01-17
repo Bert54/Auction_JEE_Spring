@@ -43,6 +43,9 @@ public class UserController {
     @POST
     @Path("/signup")
     public Response signupUser(RegisterUserDto newUser) {
+        if (newUser == null) {
+            return Response.status(400, "No data provided").build();
+        }
         User user = this.userService.register(newUser);
         if (user == null) {
             return Response.status(409, "Username " +
@@ -54,6 +57,9 @@ public class UserController {
     @POST
     @Path("/login")
     public Response loginUser(LoginUserDto user) throws NoSuchAlgorithmException {
+        if (user == null) {
+            return Response.status(400, "No data provided").build();
+        }
         Boolean validated = this.userService.login(user);
         if (validated == null) {
             return Response.status(404, "Username " +
