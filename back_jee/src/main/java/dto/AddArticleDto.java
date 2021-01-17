@@ -5,9 +5,10 @@ public class AddArticleDto {
     String name;
     String description;
     double startingPrice;
-    double actualPrice;
+    double currentPrice;
     String categories;
     long endingDate;
+    String seller;
 
     public String getName() {
         return name;
@@ -33,12 +34,12 @@ public class AddArticleDto {
         this.startingPrice = startingPrice;
     }
 
-    public double getActualPrice() {
-        return actualPrice;
+    public double getCurrentPrice() {
+        return currentPrice;
     }
 
-    public void setActualPrice(double actualPrice) {
-        this.actualPrice = actualPrice;
+    public void setCurrentPrice(double currentPrice) {
+        this.currentPrice = currentPrice;
     }
 
     public String getCategories() {
@@ -56,4 +57,9 @@ public class AddArticleDto {
     public void setEndingDate(long endingDate) {
         this.endingDate = endingDate;
     }
+
+    public String getSeller() { return this.seller; }
+
+    public void setSeller(String seller) { this.seller = seller; }
+
 }

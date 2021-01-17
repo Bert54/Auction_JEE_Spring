@@ -17,22 +17,26 @@ public class Article implements Serializable {
 
     private double startingPrice;
 
-    private double actualPrice;
+    private double currentPrice;
 
     private String categories;
 
     private long endingDate;
 
+    private String seller;
+
     public Article() {}
 
     public Article(String name, String description, double startingPrice,
-                   double actualPrice, String categories, long endingDate) {
+                   double currentPrice, String categories, long endingDate,
+                   String seller) {
         this.name = name;
         this.description = description;
         this.startingPrice = startingPrice;
-        this.actualPrice = actualPrice;
+        this.currentPrice = currentPrice;
         this.categories = categories;
         this.endingDate = endingDate;
+        this.seller = seller;
     }
 
     public long getId() {
@@ -51,8 +55,8 @@ public class Article implements Serializable {
         return startingPrice;
     }
 
-    public double getActualPrice() {
-        return actualPrice;
+    public double getCurrentPrice() {
+        return currentPrice;
     }
 
     public String getCategories() {
@@ -62,5 +66,7 @@ public class Article implements Serializable {
     public long getEndingDate() {
         return endingDate;
     }
+
+    public String getSeller() { return seller; }
 
 }
