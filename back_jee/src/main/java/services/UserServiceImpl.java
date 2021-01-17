@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User register(RegisterUserDto newUser) {
         String hashedPassword = this.hashService.hashPassword(newUser.getPassword());
-        List<User> results = this.userdao.findByUserName(newUser.getUsername());
+        List<User> results = this.userdao.find(newUser.getUsername());
         if (results.isEmpty()) {
             User user = new User(newUser.getUsername(), hashedPassword);
             user = this.userdao.save(user);
@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean login(LoginUserDto user) {
-        List<User> results = this.userdao.findByUserName(user.getUsername());
+        List<User> results = this.userdao.find(user.getUsername());
         if (!results.isEmpty()) {
             String storedPass = results.get(0).getPassword();
             return this.hashService.validatePassword(user.getPassword(), storedPass);
@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUser(String username) {
-        List<User> results = this.userdao.findByUserName(username);
+        List<User> results = this.userdao.find(username);
         if (!results.isEmpty()) {
             return results.get(0);
         }
