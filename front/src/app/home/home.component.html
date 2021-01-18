@@ -1,19 +1,8 @@
 <section>
   <span *ngIf="isLoggedIn">
-    <p>You are logged in as {{ userName }}</p>
-    <button mat-button (click)="logOut()">
-      Logout
-    </button>
+    <p>Click on one of the links above to navigate.</p>
   </span>
   <span *ngIf="!isLoggedIn">
-    <p>You are not logged in</p>
-    <p>
-      <button mat-button [routerLink]="['/signup']">
-        Register
-      </button>
-      <button mat-button [routerLink]="['/login']">
-        Login
-      </button>
-    </p>
+    <p>You are not logged in. Please register and login in in order to use the application.</p>
   </span>
 </section>

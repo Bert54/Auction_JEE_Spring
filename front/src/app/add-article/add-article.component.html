@@ -1,0 +1,53 @@
+<form [formGroup]="form" >
+  <legend>Add new article</legend>
+  <mat-divider></mat-divider>
+  <p>
+    <mat-form-field appearance="outline" [class.mgb15]="form.get('name').dirty && form.get('name').invalid">
+      <mat-label>Article name</mat-label>
+      <input matInput placeholder="Name" formControlName="name" required name="name" />
+      <mat-error *ngIf="form.get('name').dirty && form.get('name').hasError('required')">
+        Article name is required
+      </mat-error>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <input matInput placeholder="Description" formControlName="description" name="description" />
+    </mat-form-field>
+  <p>
+  <p>
+    <mat-form-field appearance="outline" [class.mgb15]="form.get('startingPrice').dirty && form.get('startingPrice').invalid">
+      <mat-label>Starting price (in €)</mat-label>
+      <input matInput placeholder="0" formControlName="startingPrice" required name="startingPrice" />
+      <mat-error *ngIf="form.get('startingPrice').dirty && form.get('startingPrice').hasError('required')">
+        Starting price is required
+      </mat-error>
+      <mat-error *ngIf="form.get('startingPrice').dirty && form.get('startingPrice').hasError('pattern')">
+        Starting price must be a number (e.g. 20 or 20.00)
+      </mat-error>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="fill">
+      <mat-label>Categories</mat-label>
+      <mat-select formControlName="categories" multiple>
+        <mat-option *ngFor="let category of categories" [value]="category">{{ category }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="fill">
+      <mat-label>Ending date</mat-label>
+      <input matInput [ngxMatDatetimePicker]="dp" formControlName="endingDate" required name="endingDate" readonly>
+      <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+      <ngx-mat-datetime-picker #dp></ngx-mat-datetime-picker>
+      <mat-error *ngIf="form.get('endingDate').dirty && form.get('endingDate').hasError('required')">
+        Ending date is required
+      </mat-error>
+    </mat-form-field>
+  </p>
+  <p>
+    <button mat-raised-button color="primary" [disabled]="form.invalid" (click)="submit(form.value)">Submit</button>
+  </p>
+</form>

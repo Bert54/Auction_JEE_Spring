@@ -1,0 +1,8 @@
+<section>
+  <p><strong>Article: {{ article.name }} </strong>(id: {{ article.id }})</p>
+  <p>Description: {{ article.description }}</p>
+  <p>Categorie(s): {{ article.categories }}</p>
+  <p>Current price: {{ article.currentPrice | number:'1.2-2' }}€</p>
+  <p>Starting price: {{ article.startingPrice | number:'1.2-2' }}€</p>
+  <p>Ending date: {{ article.endingDate * 1000 | date: 'dd-MM-yyyy HH:mm:ss' }}</p>
+</section>

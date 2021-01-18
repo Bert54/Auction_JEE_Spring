@@ -15,8 +15,6 @@ export class AuthenticationService {
   private _isLoggedIn: boolean;
   private _userName: string;
 
-  private readonly _backendURL: any;
-
   constructor(private _http: HttpRequestsService) {
     this._userName = 'NOT_LOGGED_IN';
   }
