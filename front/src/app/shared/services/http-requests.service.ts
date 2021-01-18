@@ -51,6 +51,10 @@ export class HttpRequestsService {
     return this._http.post<Article>(this._backendURL.addOneArticle, article, this._options());
   }
 
+  public deleteArticle(id: string): Observable<Article> {
+    return this._http.delete<Article>(this._backendURL.deleteOneArticle.replace(':id', id));
+  }
+
   private _options(headerList: object = {}): any {
     return { headers: new HttpHeaders(Object.assign({ 'Content-Type': 'application/json' }, headerList)) };
   }

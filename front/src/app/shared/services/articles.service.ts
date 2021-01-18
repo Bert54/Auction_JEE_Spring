@@ -23,6 +23,10 @@ export class ArticlesService {
     return this._http.createArticle(article);
   }
 
+  public delete(id: string): Observable<Article> {
+    return this._http.deleteArticle(id);
+  }
+
 
 
 }

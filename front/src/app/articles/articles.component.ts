@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ArticlesService } from '../shared/services/articles.service';
 import { Article } from '../shared/interfaces/Article';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-articles',
@@ -12,7 +13,7 @@ export class ArticlesComponent implements OnInit {
 
   private _articles: Article[];
 
-  constructor(private _articlesService: ArticlesService) {
+  constructor(private _articlesService: ArticlesService, private _router: Router) {
     this._articles = [];
   }
 
@@ -31,4 +32,13 @@ export class ArticlesComponent implements OnInit {
     return articleTimestamp >= currentTimeInSeconds;
   }
 
+  public deleteArticle(id: string): void {
+    this._articlesService.delete(id).subscribe(
+      _ => this._articlesService.fetchAll().subscribe(
+        __ => this._articles = __,
+        err2 => console.log(err2)
+      ),
+    err1 => console.log(err1)
+    );
+  }
 }

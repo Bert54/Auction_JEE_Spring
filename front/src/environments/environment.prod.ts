@@ -11,6 +11,7 @@ export const environment = {
       allArticles: '/auctions/articles',
       oneArticle: '/auctions/articles/:id',
       createArticle: '/auctions/articles/add',
+      deleteOneArticle: '/auctions/articles/delete/:id',
     }
   }
 };
