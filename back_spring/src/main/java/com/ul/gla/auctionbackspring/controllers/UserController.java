@@ -74,7 +74,7 @@ public class UserController {
                 .setSubject(user.getUsername())
                 .setIssuer(uri)
                 .setIssuedAt(new Date())
-                .setExpiration(Date.from(LocalDateTime.now().plusMinutes(15L).atZone(ZoneId.systemDefault()).toInstant()))
+                .setExpiration(Date.from(LocalDateTime.now().plusMinutes(15000000L).atZone(ZoneId.systemDefault()).toInstant()))
                 .claim("username", user.getUsername())
                 .signWith(SignatureAlgorithm.HS512, key)
                 .compact();
