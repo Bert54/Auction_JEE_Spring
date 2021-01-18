@@ -39,4 +39,11 @@ public class ArticleDaoImpl implements ArticleDao {
         this.entityManager.getEntityManager().persist(article);
         return article;
     }
+
+    @Override
+    public int delete(long id) {
+        return this.entityManager.getEntityManager().createQuery("DELETE FROM Article a WHERE a.id = :id")
+                .setParameter("id", id)
+                .executeUpdate();
+    }
 }

@@ -5,13 +5,11 @@ import dto.AddArticleDto;
 import entities.Article;
 import services.ArticleService;
 
-import javax.annotation.Resource;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonBuilderFactory;
-import javax.json.JsonObjectBuilder;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -87,6 +85,36 @@ public class ArticleController {
             return Response.status(403,
                     "Article with id " + id + " does not belong to user " +
                             securityContext.getUserPrincipal().getName()).build();
+        }
+        return Response.ok(article, MediaType.APPLICATION_JSON).build();
+    }
+
+    @DELETE
+    @JWTTokenNeeded
+    @Path("delete/{id}")
+    public Response deleteOneArticle(@Context SecurityContext securityContext,
+                                     @PathParam("id") long id) {
+        Article article = this.articleService.getArticle(id);
+        if (article == null) {
+            return Response.status(404,
+                    "Article with id " + id + " was not found").build();
+        }
+        if (!securityContext.getUserPrincipal().getName().equals(article.getSeller())) {
+            return Response.status(403,
+                    "Article with id " + id + " does not belong to user " +
+                            securityContext.getUserPrincipal().getName()).build();
+        }
+        long timestamp = System.currentTimeMillis() / 1000;
+        if (article.getEndingDate() <= timestamp) {
+            return Response.status(400,
+                    "The article's end date with id " + id + " has been reached." +
+                            " Articles with reached end dates cannot be deleted"
+            ).build();
+        }
+        int result = this.articleService.deleteArticle(id);
+        if (result == 0) {
+            return Response.status(500,
+                    "Could not delete article with id " + id).build();
         }
         return Response.ok(article, MediaType.APPLICATION_JSON).build();
     }

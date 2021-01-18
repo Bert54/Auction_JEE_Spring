@@ -14,4 +14,6 @@ public interface ArticleDao {
 
     public Article save(Article article);
 
+    public int delete(long id);
+
 }

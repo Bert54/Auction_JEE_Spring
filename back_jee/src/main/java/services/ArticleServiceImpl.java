@@ -31,4 +31,9 @@ public class ArticleServiceImpl implements ArticleService {
         return this.articledao.findAll(username);
     }
 
+    @Override
+    public int deleteArticle(long id) {
+        return this.articledao.delete(id);
+    }
+
 }

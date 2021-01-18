@@ -15,4 +15,6 @@ public interface ArticleService {
 
     public List<Article> getArticles(String username);
 
+    public int deleteArticle(long id);
+
 }
