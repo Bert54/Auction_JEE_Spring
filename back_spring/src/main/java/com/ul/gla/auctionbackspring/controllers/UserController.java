@@ -8,21 +8,18 @@ import com.ul.gla.auctionbackspring.exceptions.UserAlreadyExistsException;
 import com.ul.gla.auctionbackspring.exceptions.UserNotFoundException;
 import com.ul.gla.auctionbackspring.exceptions.UserUnauthorizedException;
 import com.ul.gla.auctionbackspring.services.UserService;
-import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Key;
-import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -40,7 +37,9 @@ public class UserController {
     public User signupUser(@RequestBody RegisterUserDto newUser) {
         User user = this.userService.signup(newUser);
         if (user == null) {
-            throw new UserAlreadyExistsException(newUser.getUsername());
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT, "User with username " + newUser.getUsername() + " already exists",
+                    new UserAlreadyExistsException("Username already exists"));
         }
         return user;
     }
@@ -51,10 +50,14 @@ public class UserController {
     public String loginUser(@RequestBody LoginUserDto user, HttpServletRequest request) {
         Boolean validated = this.userService.login(user);
         if (validated == null) {
-            throw new UserNotFoundException(user.getUsername());
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "User " + user.getUsername() + " was not found on the server",
+                    new UserNotFoundException("User not found"));
         }
         if (!validated) {
-            throw new UserUnauthorizedException();
+            throw new ResponseStatusException(
+                    HttpStatus.UNAUTHORIZED, "Passwords do not match",
+                    new UserUnauthorizedException("Wrong password"));
         }
         return "{\n\"token\":\"" + this.issueToken(this.userService.getUser(user.getUsername()),
                 request.getRequestURI()) + "\"\n}";

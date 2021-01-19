@@ -58,6 +58,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
                     return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
                 }
             } catch (Exception e) {
+                System.out.println("aaa");
                 throw new UserUnauthorizedException();
             }
             return null;
