@@ -1,9 +1,10 @@
 /* tslint:disable:variable-name */
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Article} from '../shared/interfaces/Article';
-import {ArticlesService} from '../shared/services/articles.service';
-import {Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Article } from '../shared/interfaces/Article';
+import { ArticlesService } from '../shared/services/articles.service';
+import { Router } from '@angular/router';
+import { Categories } from '../shared/data/categories';
 
 @Component({
   selector: 'app-add-article',
@@ -18,10 +19,7 @@ export class AddArticleComponent implements OnInit {
 
   constructor(private _articlesService: ArticlesService, private _router: Router) {
     this._form = this.buildForm();
-    this._categories = [
-      'test1',
-      'test2'
-    ];
+    this._categories = Categories;
   }
 
   ngOnInit(): void {
