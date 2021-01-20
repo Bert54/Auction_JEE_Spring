@@ -61,12 +61,13 @@ public class ArticleController {
             articlesJson.add(factory.createObjectBuilder()
                     .add("id", article.getId())
                     .add("name", article.getName())
-                    .add("description", article.getDescription())
-                    .add("startingPrice", article.getStartingPrice())
-                    .add("currentPrice", article.getCurrentPrice())
-                    .add("categories", article.getCategories())
-                    .add("endingDate", article.getEndingDate())
-                    .add("seller", article.getSeller()));
+                    .add("description", article.getDescription() + "")
+                    .add("startingPrice", article.getStartingPrice() + "")
+                    .add("currentPrice", article.getCurrentPrice() + "")
+                    .add("categories", article.getCategories() + "")
+                    .add("endingDate", article.getEndingDate() + "")
+                    .add("seller", article.getSeller() + "")
+                    .add("lastBidder", article.getLastBidder() + ""));
         }
         return Response.ok(articlesJson.build(), MediaType.APPLICATION_JSON).build();
     }

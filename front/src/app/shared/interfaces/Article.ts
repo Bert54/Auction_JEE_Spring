@@ -7,4 +7,5 @@ export interface Article {
   categories: string;
   endingDate: number;
   seller?: string;
+  lastBidder?: string;
 }
