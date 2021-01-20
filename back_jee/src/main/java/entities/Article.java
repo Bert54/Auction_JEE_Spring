@@ -25,11 +25,13 @@ public class Article implements Serializable {
 
     private String seller;
 
+    private String lastBidder;
+
     public Article() {}
 
     public Article(String name, String description, double startingPrice,
                    double currentPrice, String categories, long endingDate,
-                   String seller) {
+                   String seller, String lastBidder) {
         this.name = name;
         this.description = description;
         this.startingPrice = startingPrice;
@@ -37,6 +39,7 @@ public class Article implements Serializable {
         this.categories = categories;
         this.endingDate = endingDate;
         this.seller = seller;
+        this.lastBidder = lastBidder;
     }
 
     public long getId() {
@@ -69,4 +72,7 @@ public class Article implements Serializable {
 
     public String getSeller() { return seller; }
 
+    public String getLastBidder() {
+        return lastBidder;
+    }
 }

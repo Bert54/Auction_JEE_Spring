@@ -9,6 +9,7 @@ public class AddArticleDto {
     String categories;
     long endingDate;
     String seller;
+    String lastBidder;
 
     public String getName() {
         return name;
@@ -61,5 +62,13 @@ public class AddArticleDto {
     public String getSeller() { return this.seller; }
 
     public void setSeller(String seller) { this.seller = seller; }
+
+    public String getLastBidder() {
+        return lastBidder;
+    }
+
+    public void setLastBidder(String lastBidder) {
+        this.lastBidder = lastBidder;
+    }
 
 }

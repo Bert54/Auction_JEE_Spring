@@ -18,7 +18,7 @@ public class ArticleServiceImpl implements ArticleService {
     public Article addArticle(AddArticleDto article) {
         return this.articledao.save(new Article(article.getName(), article.getDescription(),
                 article.getStartingPrice(), article.getCurrentPrice(), article.getCategories(),
-                article.getEndingDate(), article.getSeller()));
+                article.getEndingDate(), article.getSeller(), null));
     }
 
     @Override
