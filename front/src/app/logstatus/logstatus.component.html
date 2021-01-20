@@ -1,0 +1,22 @@
+<section style="margin-bottom: 10px;" >
+  <span *ngIf="isLoggedIn">
+    <p>You are logged in as {{ userName }}</p>
+    <button mat-stroked-button color="primary" style="margin-bottom: 10px" (click)="logOut()">
+      Logout
+    </button>
+    <p><a [routerLink]="['/home']">Home page</a></p>
+    <p><a [routerLink]="['/articles']">My articles</a></p>
+  </span>
+  <span *ngIf="!isLoggedIn">
+    <p>You are not logged in</p>
+    <p>
+      <button mat-stroked-button color="primary" [routerLink]="['/signup']">
+        Register
+      </button>
+      <button mat-stroked-button color="primary" [routerLink]="['/login']">
+        Login
+      </button>
+    </p>
+  </span>
+  <mat-divider></mat-divider>
+</section>

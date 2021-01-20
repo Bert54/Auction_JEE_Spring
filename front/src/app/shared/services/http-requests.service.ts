@@ -6,6 +6,7 @@ import {Observable} from 'rxjs';
 import {User} from '../interfaces/User';
 import {Username} from '../interfaces/Username';
 import {JWT} from '../interfaces/JWT';
+import {Article} from '../interfaces/Article';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +37,22 @@ export class HttpRequestsService {
 
   public createUser(user: User): Observable<any> {
     return this._http.post<User>(this._backendURL.signup, user, this._options());
+  }
+
+  public fetchAllArticles(): Observable<Article[]> {
+    return this._http.get<Article[]>(this._backendURL.allArticles);
+  }
+
+  public fetchOneArticle(id: string): Observable<Article> {
+    return this._http.get<Article>(this._backendURL.oneArticle.replace(':id', id));
+  }
+
+  public createArticle(article: Article): Observable<any> {
+    return this._http.post<Article>(this._backendURL.addOneArticle, article, this._options());
+  }
+
+  public deleteArticle(id: string): Observable<Article> {
+    return this._http.delete<Article>(this._backendURL.deleteOneArticle.replace(':id', id));
   }
 
   private _options(headerList: object = {}): any {

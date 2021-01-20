@@ -9,7 +9,7 @@ public class EntityManagerProviderImpl implements EntityManagerProvider {
     @PersistenceUnit
     private final EntityManagerFactory emfactory;
     @PersistenceContext
-    EntityManager entitymanager;
+    private final EntityManager entitymanager;
 
     public EntityManagerProviderImpl() {
         emfactory = Persistence.createEntityManagerFactory("Auctions");

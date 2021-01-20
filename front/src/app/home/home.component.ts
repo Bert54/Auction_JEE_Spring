@@ -19,12 +19,4 @@ export class HomeComponent implements OnInit {
     return this._authService.isLoggedInStatus;
   }
 
-  get userName(): string {
-    return this._authService.userName;
-  }
-
-  public logOut(): void {
-    this._authService.logout();
-  }
-
 }

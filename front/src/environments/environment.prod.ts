@@ -8,6 +8,10 @@ export const environment = {
       users: '/auctions/users',
       signup: '/auctions/users/signup',
       login: '/auctions/users/login',
+      allArticles: '/auctions/articles',
+      oneArticle: '/auctions/articles/:id',
+      createArticle: '/auctions/articles/add',
+      deleteOneArticle: '/auctions/articles/delete/:id',
     }
   }
 };
