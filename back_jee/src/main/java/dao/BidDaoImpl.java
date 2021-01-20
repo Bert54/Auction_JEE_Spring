@@ -33,4 +33,11 @@ public class BidDaoImpl implements BidDao {
         return result.get(0);
     }
 
+    @Override
+    public int delete(long articleId) {
+        return this.entityManager.getEntityManager().createQuery("DELETE FROM Bid b WHERE b.articleId = :id")
+                .setParameter("id", articleId)
+                .executeUpdate();
+    }
+
 }

@@ -11,4 +11,6 @@ public interface BidDao {
 
     public Bid find(String bidder, long articleId);
 
+    public int delete(long articleId);
+
 }

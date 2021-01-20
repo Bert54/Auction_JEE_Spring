@@ -40,7 +40,11 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public int deleteArticle(long id) {
-        return this.articledao.delete(id);
+        int numDeleted = this.articledao.delete(id);
+        if (numDeleted != 0) {
+            this.biddao.delete(id);
+        }
+        return numDeleted;
     }
 
     @Override
