@@ -51,6 +51,19 @@ public class UserController {
             return Response.status(409, "Username " +
                     newUser.getUsername() + " already exists.").build();
         }
+
+        Boolean street = newUser.getStreet() != null;
+        Boolean city = newUser.getCity() != null;
+        Boolean postcode = newUser.getPostcode() != null;
+        if( street || city || postcode ){
+            if(!street || !city || !postcode){
+                return Response.status(400,"incomplete address").build();
+            }
+            if(postcode && (!newUser.getPostcode().toString().matches("[0-9]{4}$"))){
+                return Response.status(400,"invalid postcode").build();
+            }
+
+        }
         return Response.ok(user, MediaType.APPLICATION_JSON).status(201).build();
     }
 

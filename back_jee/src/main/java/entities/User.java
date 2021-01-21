@@ -24,13 +24,14 @@ public class User implements Serializable {
 
     private String city;
 
-    private int postcode;
+    private Integer postcode;
 
-    private int houseNumber;
+    private Integer houseNumber;
 
     public User() {}
 
-    public User(String username, String password, String firstName, String lastName, String street, String city, int postcode, int houseNumber) {
+
+    public User(String username, String password, String firstName, String lastName, String street, String city, Integer postcode, Integer houseNumber) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
@@ -53,5 +54,30 @@ public class User implements Serializable {
     public String getPassword() {
         return this.password;
     }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public Integer getPostcode() {
+        return postcode;
+    }
+
+    public Integer getHouseNumber() {
+        return houseNumber;
+    }
+
 
 }
