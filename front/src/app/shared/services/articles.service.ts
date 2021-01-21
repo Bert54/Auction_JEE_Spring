@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import {HttpRequestsService} from './http-requests.service';
 import {Observable} from 'rxjs';
 import {Article} from '../interfaces/Article';
+import {Bid} from '../interfaces/Bid';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,16 @@ export class ArticlesService {
     return this._http.deleteArticle(id);
   }
 
+  public fetchByFilter(name: string, categories: string): Observable<Article[]> {
+    return this._http.fetchArticlesFilter(name, categories);
+  }
 
+  public fetchByUserBids(): Observable<Article[]> {
+    return this._http.fetchArticlesUserBids();
+  }
+
+  public sendNewBid(newBid: Bid): Observable<any> {
+    return this._http.sendNewBidOnArticle(newBid);
+  }
 
 }

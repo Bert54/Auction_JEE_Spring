@@ -7,6 +7,7 @@ import {User} from '../interfaces/User';
 import {Username} from '../interfaces/Username';
 import {JWT} from '../interfaces/JWT';
 import {Article} from '../interfaces/Article';
+import {Bid} from '../interfaces/Bid';
 
 @Injectable({
   providedIn: 'root'
@@ -53,6 +54,24 @@ export class HttpRequestsService {
 
   public deleteArticle(id: string): Observable<Article> {
     return this._http.delete<Article>(this._backendURL.deleteOneArticle.replace(':id', id));
+  }
+
+  public fetchArticlesFilter(name: string, categories: string): Observable<Article[]> {
+    return this._http.get<Article[]>(this._backendURL.searchArticles, {
+        params: {
+          name,
+          categories
+        }
+      }
+    );
+  }
+
+  public fetchArticlesUserBids(): Observable<Article[]> {
+    return this._http.get<Article[]>(this._backendURL.userBids);
+  }
+
+  public sendNewBidOnArticle(newBid: Bid): Observable<any> {
+    return this._http.post<Article>(this._backendURL.newBid, newBid, this._options());
   }
 
   private _options(headerList: object = {}): any {

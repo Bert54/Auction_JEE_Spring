@@ -5,7 +5,9 @@
       Logout
     </button>
     <p><a [routerLink]="['/home']">Home page</a></p>
+    <p><a [routerLink]="['/articles/search']">Browse articles</a></p>
     <p><a [routerLink]="['/articles']">My articles</a></p>
+    <p><a [routerLink]="['/articles/mybids']">My auctions</a></p>
   </span>
   <span *ngIf="!isLoggedIn">
     <p>You are not logged in</p>
@@ -17,6 +19,8 @@
         Login
       </button>
     </p>
+    <p><a [routerLink]="['/home']">Home page</a></p>
+    <p><a [routerLink]="['/articles/search']">Browse articles</a></p>
   </span>
   <mat-divider></mat-divider>
 </section>

@@ -16,6 +16,9 @@ export const environment = {
       oneArticle: '/auctions/articles/:id',
       addOneArticle: '/auctions/articles/add',
       deleteOneArticle: '/auctions/articles/delete/:id',
+      searchArticles: '/auctions/articles/search',
+      newBid: '/auctions/articles/bid',
+      userBids: '/auctions/articles/userbids',
     }
   }
 };

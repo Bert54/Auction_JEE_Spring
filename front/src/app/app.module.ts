@@ -28,6 +28,9 @@ import {
   NgxMatTimepickerModule
 } from '@angular-material-components/datetime-picker';
 import { MatSelectModule } from '@angular/material/select';
+import { SearchArticleComponent } from './search-article/search-article.component';
+import { UserBidsComponent } from './user-bids/user-bids.component';
+import { BidArticleComponent } from './bid-article/bid-article.component';
 
 
 @NgModule({
@@ -39,7 +42,10 @@ import { MatSelectModule } from '@angular/material/select';
     ArticlesComponent,
     LogstatusComponent,
     ArticleComponent,
-    AddArticleComponent
+    AddArticleComponent,
+    SearchArticleComponent,
+    UserBidsComponent,
+    BidArticleComponent
   ],
   imports: [
     BrowserModule,
