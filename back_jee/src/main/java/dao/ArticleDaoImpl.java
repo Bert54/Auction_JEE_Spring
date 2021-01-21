@@ -3,7 +3,6 @@ package dao;
 import configuration.EntityManagerProvider;
 import dto.BidArticleDto;
 import entities.Article;
-import entities.User;
 
 import javax.ejb.Singleton;
 import javax.inject.Inject;

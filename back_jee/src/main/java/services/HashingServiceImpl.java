@@ -6,11 +6,11 @@ import org.apache.commons.codec.binary.Hex;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
-import javax.ejb.Singleton;
+import javax.ejb.Stateless;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
-@Singleton
+@Stateless
 public class HashingServiceImpl implements HashingService {
 
     private static final String SALT = "12345";

@@ -1,7 +1,6 @@
 package dao;
 
 import configuration.EntityManagerProvider;
-import entities.Article;
 import entities.Bid;
 
 import javax.inject.Inject;
