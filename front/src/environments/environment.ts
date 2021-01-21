@@ -19,6 +19,7 @@ export const environment = {
       searchArticles: '/auctions/articles/search',
       newBid: '/auctions/articles/bid',
       userBids: '/auctions/articles/userbids',
+      offers: '/auctions/miscs/offers',
     }
   }
 };
