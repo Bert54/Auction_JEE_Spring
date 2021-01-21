@@ -8,14 +8,14 @@ public class RegisterUserDto {
     String lastName;
     String street;
     String city;
-    Integer postcode;
-    Integer houseNumber;
+    int postcode;
+    int houseNumber;
 
-    public Integer getPostcode() {
+    public int getPostcode() {
         return postcode;
     }
 
-    public Integer getHouseNumber() {
+    public int getHouseNumber() {
         return houseNumber;
     }
 

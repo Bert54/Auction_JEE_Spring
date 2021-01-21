@@ -46,24 +46,28 @@ public class UserController {
         if (newUser == null) {
             return Response.status(400, "No data provided").build();
         }
+
+        Boolean street = newUser.getStreet() != null;
+        Boolean city = newUser.getCity() != null;
+        Boolean postcode = newUser.getPostcode() != 0;
+        Integer pstCode = new Integer(newUser.getPostcode());
+        if( street || city || postcode){
+            //System.out.println(street + " "+ city);
+            if(!street || !city || !postcode){
+                return Response.status(400,"incomplete address").build();
+            }
+            if(!pstCode.toString().matches("[0-9]{5}$")){
+                return Response.status(400,"invalid postcode"+newUser.getPostcode()).build();
+            }
+
+        }
         User user = this.userService.register(newUser);
         if (user == null) {
             return Response.status(409, "Username " +
                     newUser.getUsername() + " already exists.").build();
         }
 
-        Boolean street = newUser.getStreet() != null;
-        Boolean city = newUser.getCity() != null;
-        Boolean postcode = newUser.getPostcode() != null;
-        if( street || city || postcode ){
-            if(!street || !city || !postcode){
-                return Response.status(400,"incomplete address").build();
-            }
-            if(postcode && (!newUser.getPostcode().toString().matches("[0-9]{4}$"))){
-                return Response.status(400,"invalid postcode").build();
-            }
 
-        }
         return Response.ok(user, MediaType.APPLICATION_JSON).status(201).build();
     }
 

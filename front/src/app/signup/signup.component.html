@@ -42,6 +42,42 @@
       </mat-form-field>
     </p>
     <p>
+      <mat-form-field appearance="outline"[class.mgb15]="form.get('firstName').dirty && form.get('firstName')">
+        <mat-label>Firstname</mat-label>
+        <input matInput placeholder="FirstName" formControlName="firstName" name="firstName"/>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="outline"[class.mgb15]="form.get('lastName').dirty && form.get('lastName')">
+        <mat-label>Lastname</mat-label>
+        <input matInput placeholder="Last Name" formControlName="lastName" name="lastName"/>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="outline"[class.mgb15]="form.get('street').dirty && form.get('street')">
+        <mat-label>Street</mat-label>
+        <input matInput placeholder="Street" formControlName="street" name="street"/>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="outline"[class.mgb15]="form.get('city').dirty && form.get('city')">
+        <mat-label>City</mat-label>
+        <input matInput placeholder="City" formControlName="city" name="city"/>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="outline"[class.mgb15]="form.get('postcode').dirty && form.get('postcode')">
+        <mat-label>Postcode</mat-label>
+        <input matInput placeholder="Postcode" formControlName="postcode" name="postcode"/>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="outline"[class.mgb15]="form.get('houseNumber').dirty && form.get('houseNumber')">
+        <mat-label>House Number</mat-label>
+        <input matInput placeholder="House Number" formControlName="houseNumber" name="houseNumber" type="number">
+      </mat-form-field>
+    </p>
+    <p>
       <button mat-button (click)="signup(form.value)" [disabled]="form.invalid">
         Signup
         <mat-icon>arrow_circle_up</mat-icon>

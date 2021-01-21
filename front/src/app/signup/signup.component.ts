@@ -39,7 +39,13 @@ export class SignupComponent implements OnInit {
     return new FormGroup({
       username: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
-      cpassword: new FormControl('')
+      cpassword: new FormControl(''),
+      firstName: new FormControl(''),
+      lastName: new FormControl(''),
+      street: new FormControl(''),
+      city: new FormControl(''),
+      postcode: new FormControl(''),
+      houseNumber: new FormControl(''),
     },
       {
         validators: MatchValidators.mustMatch
@@ -77,26 +83,32 @@ export class SignupComponent implements OnInit {
 
   public signup(formValues: any): void {
     if (formValues.username && formValues.password) {
-      const user: User = {
-        username: formValues.username,
-        password: formValues.password
-      };
-      this._authService.createUser(user)
-        .subscribe(
-          _ => {
-            this._registrationSuccess = true;
-          },
-          err => {
-            this._hasError = true;
-            if (err.status === 409){
-              this._errorContent = 'User already exists';
-              console.log(err);
-            } else{
-              this._errorContent = err.status + ' : ' + err.message;
+        const user: User = {
+          username: formValues.username,
+          password: formValues.password,
+          firstName: formValues.firstName,
+          lastName: formValues.lastName,
+          street: formValues.street ? formValues.street : null,
+          city: formValues.city ? formValues.city : null,
+          postcode: formValues.postcode ? formValues.postcode : 0,
+          houseNumber: formValues.houseNumber ? formValues.houseNumber : 0
+        };
+        this._authService.createUser(user)
+          .subscribe(
+            _ => {
+              this._registrationSuccess = true;
+            },
+            err => {
+              this._hasError = true;
+              if (err.status === 409) {
+                this._errorContent = 'User already exists';
+                console.log(err);
+              } else {
+                this._errorContent = err.status + ' : ' + err.message;
+              }
             }
-          }
-        );
-    }
+          );
+      }
   }
 
 }

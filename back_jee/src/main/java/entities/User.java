@@ -24,21 +24,21 @@ public class User implements Serializable {
 
     private String city;
 
-    private Integer postcode;
+    private int postcode;
 
-    private Integer houseNumber;
+    private int houseNumber;
 
     public User() {}
 
 
-    public User(String username, String password, String firstName, String lastName, String street, String city, Integer postcode, Integer houseNumber) {
+    public User(String username, String password, String firstName, String lastName, String street, String city, int postcode, int houseNumber) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.street = street;
         this.city = city;
-        this. postcode = postcode;
+        this.postcode = postcode;
         this.houseNumber = houseNumber;
 
     }
@@ -71,11 +71,11 @@ public class User implements Serializable {
         return city;
     }
 
-    public Integer getPostcode() {
+    public int getPostcode() {
         return postcode;
     }
 
-    public Integer getHouseNumber() {
+    public int getHouseNumber() {
         return houseNumber;
     }
 
