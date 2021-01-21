@@ -46,7 +46,7 @@ public class ArticleDaoImpl implements ArticleDao {
     @Override
     public List<Article> find(String name, long timestamp) {
         TypedQuery<Article> query = this.entityManager.getEntityManager().createQuery(
-                "SELECT a FROM Article AS a WHERE a.name LIKE :name AND a.endingDate > :timestamp", Article.class)
+                "SELECT a FROM Article AS a WHERE LOWER(a.name) LIKE LOWER(:name) AND a.endingDate > :timestamp", Article.class)
                 .setParameter("name", "%" + name + "%")
                 .setParameter("timestamp", timestamp);
         return query.getResultList();
@@ -55,7 +55,7 @@ public class ArticleDaoImpl implements ArticleDao {
     @Override
     public List<Article> find(long timestamp, String category) {
         TypedQuery<Article> query = this.entityManager.getEntityManager().createQuery(
-                "SELECT a FROM Article AS a WHERE a.categories LIKE :category AND a.endingDate > :timestamp", Article.class)
+                "SELECT a FROM Article AS a WHERE LOWER(a.categories) LIKE LOWER(:category) AND a.endingDate > :timestamp", Article.class)
                 .setParameter("category", "%" + category + "%")
                 .setParameter("timestamp", timestamp);
         return query.getResultList();
