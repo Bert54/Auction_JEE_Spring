@@ -1,6 +1,7 @@
 package dao;
 
 import configuration.EntityManagerProvider;
+import dto.BidArticleDto;
 import entities.Article;
 import entities.User;
 
@@ -14,6 +15,14 @@ public class ArticleDaoImpl implements ArticleDao {
 
     @Inject
     private EntityManagerProvider entityManager;
+
+    @Override
+    public List<Article> findAll(long timestamp) {
+        TypedQuery<Article> query = this.entityManager.getEntityManager().createQuery(
+                "SELECT a FROM Article AS a WHERE a.endingDate > :timestamp", Article.class)
+                .setParameter("timestamp", timestamp);
+        return query.getResultList();
+    }
 
     @Override
     public List<Article> findAll(String username) {
@@ -35,6 +44,32 @@ public class ArticleDaoImpl implements ArticleDao {
     }
 
     @Override
+    public List<Article> find(String name, long timestamp) {
+        TypedQuery<Article> query = this.entityManager.getEntityManager().createQuery(
+                "SELECT a FROM Article AS a WHERE a.name LIKE :name AND a.endingDate > :timestamp", Article.class)
+                .setParameter("name", "%" + name + "%")
+                .setParameter("timestamp", timestamp);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Article> find(long timestamp, String category) {
+        TypedQuery<Article> query = this.entityManager.getEntityManager().createQuery(
+                "SELECT a FROM Article AS a WHERE a.categories LIKE :category AND a.endingDate > :timestamp", Article.class)
+                .setParameter("category", "%" + category + "%")
+                .setParameter("timestamp", timestamp);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Article> find(String username) {
+        TypedQuery<Article> query = this.entityManager.getEntityManager().createQuery(
+                "SELECT a FROM Article a JOIN Bid b ON a.id = b.articleId WHERE b.bidder = :username ", Article.class)
+                .setParameter("username", username);
+        return query.getResultList();
+    }
+
+    @Override
     public Article save(Article article) {
         this.entityManager.getEntityManager().persist(article);
         return article;
@@ -44,6 +79,17 @@ public class ArticleDaoImpl implements ArticleDao {
     public int delete(long id) {
         return this.entityManager.getEntityManager().createQuery("DELETE FROM Article a WHERE a.id = :id")
                 .setParameter("id", id)
+                .executeUpdate();
+    }
+
+    @Override
+    public int update(BidArticleDto bid) {
+        return this.entityManager.getEntityManager().createQuery(
+                "UPDATE Article e SET e.currentPrice = :amount,e.lastBidder = :bidder " +
+                        "WHERE e.id = :id")
+                .setParameter("amount", bid.getAmount())
+                .setParameter("bidder", bid.getBidder())
+                .setParameter("id", bid.getId())
                 .executeUpdate();
     }
 }

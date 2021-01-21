@@ -1,6 +1,7 @@
 package services;
 
 import dto.AddArticleDto;
+import dto.BidArticleDto;
 import entities.Article;
 
 import javax.ejb.Local;
@@ -16,5 +17,11 @@ public interface ArticleService {
     public List<Article> getArticles(String username);
 
     public int deleteArticle(long id);
+
+    public List<Article> filterArticles(String name, String categories);
+
+    public int updateArticle(BidArticleDto bid);
+
+    public List<Article> getArticlesByUserBids(String username);
 
 }
