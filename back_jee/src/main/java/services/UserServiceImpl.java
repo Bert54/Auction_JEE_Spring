@@ -5,11 +5,11 @@ import dto.LoginUserDto;
 import dto.RegisterUserDto;
 import entities.User;
 
-import javax.ejb.Singleton;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.util.List;
 
-@Singleton
+@Stateless
 public class UserServiceImpl implements UserService {
 
     @Inject

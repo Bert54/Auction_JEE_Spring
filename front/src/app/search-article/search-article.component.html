@@ -1,0 +1,42 @@
+<h1>Browse articles</h1>
+<section>
+  <legend>Search articles</legend>
+  <form [formGroup]="form" >
+    <p>
+      <mat-form-field appearance="outline">
+        <mat-label>Article name</mat-label>
+        <input matInput placeholder="Name" formControlName="name" name="name" />
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="fill">
+        <mat-label>Categories</mat-label>
+        <mat-select formControlName="categories" multiple>
+          <mat-option *ngFor="let category of categories" [value]="category">{{ category }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </p>
+    <p>
+      <button mat-raised-button color="primary" (click)="submit(form.get('name').value, form.get('categories').value)">Search</button>
+    </p>
+  </form>
+</section>
+<mat-divider></mat-divider>
+<section>
+  <mat-list>
+    <mat-list-item *ngFor="let article of articles">
+      <div mat-line><strong>{{ article.name }}</strong></div>
+      <div mat-line>Current bid: {{ article.currentPrice }}</div>
+      <div mat-line>Last bidder: {{ article.lastBidder }}</div>
+      <div mat-line>Ends the: {{ article.endingDate * 1000 | date: 'dd-MM-yyyy HH:mm:ss' }}</div>
+      <div mat-line>Seller: {{ article.seller }}</div>
+      <div mat-line *ngIf="isLoggedIn() && isNotOwner(article.seller)">
+        <button mat-icon-button [routerLink]="['/articles/bid/',article.id]">Details & bid</button>
+      </div>
+      <div mat-line *ngIf="!isLoggedIn() || !isNotOwner(article.seller)">
+        <button mat-icon-button [routerLink]="['/articles/details',article.id]">Details</button>
+      </div>
+      <mat-divider></mat-divider>
+    </mat-list-item>
+  </mat-list>
+</section>

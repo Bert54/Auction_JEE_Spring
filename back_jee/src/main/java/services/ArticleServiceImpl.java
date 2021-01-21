@@ -7,12 +7,12 @@ import dto.BidArticleDto;
 import entities.Article;
 import entities.Bid;
 
-import javax.ejb.Singleton;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
-@Singleton
+@Stateless
 public class ArticleServiceImpl implements ArticleService {
 
     @Inject

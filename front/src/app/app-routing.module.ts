@@ -6,8 +6,11 @@ import { SignupComponent } from './signup/signup.component';
 import { ArticlesComponent } from './articles/articles.component';
 import { LoggedInGuard } from './shared/guards/logged-in.guard';
 import { ArticleComponent } from './article/article.component';
-import { LoggedInArticleOwnershipGuard } from './shared/guards/logged-in-article-ownership.guard';
 import { AddArticleComponent } from './add-article/add-article.component';
+import { SearchArticleComponent } from './search-article/search-article.component';
+import { UserBidsComponent } from './user-bids/user-bids.component';
+import { BidArticleComponent } from './bid-article/bid-article.component';
+import {ArticleActiveGuard} from './shared/guards/article-active.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -15,8 +18,11 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'articles', component: ArticlesComponent, canActivate: [LoggedInGuard] },
-  { path: 'articles/details/:id', component: ArticleComponent, canActivate: [LoggedInArticleOwnershipGuard] },
+  { path: 'articles/details/:id', component: ArticleComponent },
   { path: 'articles/new', component: AddArticleComponent, canActivate: [LoggedInGuard] },
+  { path: 'articles/search', component: SearchArticleComponent },
+  { path: 'articles/mybids', component: UserBidsComponent, canActivate: [LoggedInGuard] },
+  { path: 'articles/bid/:id', component: BidArticleComponent, canActivate: [LoggedInGuard, ArticleActiveGuard] },
 ];
 
 @NgModule({

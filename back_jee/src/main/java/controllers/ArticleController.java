@@ -55,7 +55,7 @@ public class ArticleController {
     public Response getAllArticles(@Context SecurityContext securityContext) {
         List<Article> articles = this.articleService.getArticles(
                 securityContext.getUserPrincipal().getName());
-        return Response.ok(this.buildJsonArray(articles).build(), MediaType.APPLICATION_JSON).build();
+        return Response.ok(this.buildJsonArrayArticle(articles).build(), MediaType.APPLICATION_JSON).build();
     }
 
     @GET
@@ -104,7 +104,7 @@ public class ArticleController {
     public Response getArticlesByFilter(@QueryParam("name") String name,
                                         @QueryParam("categories") String categories) {
         List<Article> articles = this.articleService.filterArticles(name, categories);
-        return Response.ok(this.buildJsonArray(articles).build(), MediaType.APPLICATION_JSON).build();
+        return Response.ok(this.buildJsonArrayArticle(articles).build(), MediaType.APPLICATION_JSON).build();
     }
 
     @POST
@@ -150,10 +150,10 @@ public class ArticleController {
     public Response getUserBids(@Context SecurityContext securityContext) {
         List<Article> articles = this.articleService.getArticlesByUserBids(
                 securityContext.getUserPrincipal().getName());
-        return Response.ok(this.buildJsonArray(articles).build(), MediaType.APPLICATION_JSON).build();
+        return Response.ok(this.buildJsonArrayArticle(articles).build(), MediaType.APPLICATION_JSON).build();
     }
 
-    private JsonArrayBuilder buildJsonArray(List<Article> articles) {
+    private JsonArrayBuilder buildJsonArrayArticle(List<Article> articles) {
         final Map<String, ?> config = Collections.emptyMap();
         JsonBuilderFactory factory = Json.createBuilderFactory(config);
         JsonArrayBuilder articlesJson = factory.createArrayBuilder();

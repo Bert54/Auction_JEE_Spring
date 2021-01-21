@@ -1,0 +1,24 @@
+<app-article></app-article>
+<h2>Bid</h2>
+<section>
+  <form [formGroup]="form">
+    <p>
+      <mat-form-field appearance="outline" [class.mgb15]="form.get('amount').dirty && form.get('amount').invalid">
+        <mat-label>Starting price (in €)</mat-label>
+        <input matInput placeholder="0" formControlName="amount" required name="amount" />
+        <mat-error *ngIf="form.get('amount').dirty && form.get('amount').hasError('required')">
+          You must specify a new amount
+        </mat-error>
+        <mat-error *ngIf="form.get('amount').dirty && form.get('amount').hasError('pattern')">
+          Amount must be a number (e.g. 20 or 20.00)
+        </mat-error>
+      </mat-form-field>
+    </p>
+    <p>
+      <button mat-raised-button color="primary" [disabled]="form.invalid" (click)="submit(form.get('amount').value)">Bid</button>
+    </p>
+    <span *ngIf="amountInvalid">
+      <p><strong>New bid price must be higher than current bid price</strong></p>
+    </span>
+  </form>
+</section>
