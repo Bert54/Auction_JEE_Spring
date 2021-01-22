@@ -1,13 +1,13 @@
 package com.ul.gla.auctionbackspring.services;
 
-import com.ul.gla.auctionbackspring.dto.ArticleDto;
+import com.ul.gla.auctionbackspring.dto.AddArticleDto;
 import com.ul.gla.auctionbackspring.entities.Article;
-
-import java.util.List;
 
 public interface ArticleService {
 
-    public Article addArticle(ArticleDto article);
+    public Iterable<Article> findAll();
+
+    public Article addArticle(AddArticleDto article);
 
     public Article getArticle(long id);
 

@@ -1,6 +1,6 @@
 package com.ul.gla.auctionbackspring.dto;
 
-public class ArticleDto {
+public class AddArticleDto {
 
     private String name;
     private String description;
@@ -8,6 +8,8 @@ public class ArticleDto {
     private double currentPrice;
     private String categories;  // Separator: ","
     private long endingDate;
+    String seller;
+    String lastBidder;
 
     public String getName() { return name; }
 
@@ -53,5 +55,21 @@ public class ArticleDto {
 
     public void setEndingDate(long endingDate) {
         this.endingDate = endingDate;
+    }
+
+    public String getSeller() {
+        return seller;
+    }
+
+    public void setSeller(String seller) {
+        this.seller = seller;
+    }
+
+    public String getLastBidder() {
+        return lastBidder;
+    }
+
+    public void setLastBidder(String lastBidder) {
+        this.lastBidder = lastBidder;
     }
 }
