@@ -1,22 +1,29 @@
 package com.ul.gla.auctionbackspring.services;
 
 import com.ul.gla.auctionbackspring.dao.ArticleRepository;
-import com.ul.gla.auctionbackspring.dto.ArticleDto;
+import com.ul.gla.auctionbackspring.dto.AddArticleDto;
 import com.ul.gla.auctionbackspring.entities.Article;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
     private ArticleRepository articledao;
 
     @Override
-    public Article addArticle(ArticleDto article) {
+    public Article addArticle(AddArticleDto article) {
         return this.articledao.save(new Article(article.getName(), article.getDescription(),
                 article.getStartingPrice(), article.getCategories(), article.getEndingDate()));
+    }
+
+    @Override
+    public Iterable<Article> findAll() {
+        return articledao.findAll();
     }
 
     @Override

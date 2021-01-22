@@ -1,6 +1,6 @@
 package com.ul.gla.auctionbackspring.dto;
 
-public class ArticleDto {
+public class AddArticleDto {
 
     private String name;
     private String description;
