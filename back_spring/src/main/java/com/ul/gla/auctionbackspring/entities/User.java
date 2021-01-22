@@ -36,7 +36,7 @@ public class User {
         this.lastName = lastName;
         this.street = street;
         this.city = city;
-        this. postcode = postcode;
+        this.postcode = postcode;
         this.houseNumber = houseNumber;
     }
 

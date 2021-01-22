@@ -57,7 +57,7 @@ public class UserController {
                 return Response.status(400,"incomplete address").build();
             }
             if(!pstCode.toString().matches("[0-9]{5}$")){
-                return Response.status(400,"invalid postcode"+newUser.getPostcode()).build();
+                return Response.status(400,"invalid postcode "+newUser.getPostcode()+" format : aaaaa").build();
             }
 
         }

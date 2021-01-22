@@ -54,22 +54,31 @@
       </mat-form-field>
     </p>
     <p>
-      <mat-form-field appearance="outline"[class.mgb15]="form.get('street').dirty && form.get('street')">
+      <mat-form-field appearance="outline"[class.mgb15]="form.get('street').dirty && form.get('street').invalid">
         <mat-label>Street</mat-label>
         <input matInput placeholder="Street" formControlName="street" name="street"/>
       </mat-form-field>
+      <mat-error *ngIf="form.get('street').dirty && form.hasError('empty')">
+        incomplete address
+      </mat-error>
     </p>
     <p>
-      <mat-form-field appearance="outline"[class.mgb15]="form.get('city').dirty && form.get('city')">
+      <mat-form-field appearance="outline"[class.mgb15]="form.get('city').dirty && form.get('city').invalid">
         <mat-label>City</mat-label>
         <input matInput placeholder="City" formControlName="city" name="city"/>
       </mat-form-field>
+      <mat-error *ngIf="form.get('city').dirty && form.hasError('empty')">
+        incomplete address
+      </mat-error>
     </p>
     <p>
-      <mat-form-field appearance="outline"[class.mgb15]="form.get('postcode').dirty && form.get('postcode')">
+      <mat-form-field appearance="outline"[class.mgb15]="form.get('postcode').dirty && form.get('postcode').invalid">
         <mat-label>Postcode</mat-label>
         <input matInput placeholder="Postcode" formControlName="postcode" name="postcode"/>
       </mat-form-field>
+      <mat-error *ngIf="form.get('postcode').dirty && form.hasError('empty')">
+        incomplete address
+      </mat-error>
     </p>
     <p>
       <mat-form-field appearance="outline"[class.mgb15]="form.get('houseNumber').dirty && form.get('houseNumber')">

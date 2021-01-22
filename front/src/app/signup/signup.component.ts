@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { User } from '../shared/interfaces/User';
 import {MatchValidators} from '../shared/validators/MatchValidators';
 import {PasswordsStateMatcher} from '../shared/validators/PasswordsStateMatcher';
+import {AdressValidator} from '../shared/validators/AdressValidator';
+import {AdressStateMatcher} from '../shared/validators/AdressStateMatcher';
 
 @Component({
   selector: 'app-signup',
@@ -21,6 +23,7 @@ export class SignupComponent implements OnInit {
   private _hideC = true;
   public _matcher: PasswordsStateMatcher;
   public _registrationSuccess: boolean;
+  public _addressMatcher: AdressStateMatcher;
 
   constructor(private _authService: AuthenticationService, private _router: Router) {
     this._form = this.buildForm();
@@ -29,6 +32,7 @@ export class SignupComponent implements OnInit {
   ngOnInit(): void {
     this._registrationSuccess = false;
     this._matcher = new PasswordsStateMatcher();
+    this._addressMatcher = new AdressStateMatcher();
   }
 
   get form(): FormGroup {
@@ -44,11 +48,11 @@ export class SignupComponent implements OnInit {
       lastName: new FormControl(''),
       street: new FormControl(''),
       city: new FormControl(''),
-      postcode: new FormControl(''),
+      postcode: new FormControl('',  Validators.pattern('(^[0-9]{5}|$)')),
       houseNumber: new FormControl(''),
     },
       {
-        validators: MatchValidators.mustMatch
+        validators: Validators.compose([MatchValidators.mustMatch, AdressValidator.adressComplete])
       });
   }
 
@@ -105,6 +109,7 @@ export class SignupComponent implements OnInit {
                 console.log(err);
               } else {
                 this._errorContent = err.status + ' : ' + err.message;
+                console.log(err);
               }
             }
           );
