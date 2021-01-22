@@ -16,6 +16,9 @@ public class Article {
     private String categories;  // Separator: ","
     private long endingDate;
 
+    private String seller;
+    private String lastBidder;
+
     public Article() {}
 
     /**
@@ -26,13 +29,16 @@ public class Article {
      * @param categories
      * @param endingDate
      */
-    public Article(String name, String description, double startingPrice, String categories, long endingDate) {
+    public Article(String name, String description, double startingPrice, String categories,
+                   long endingDate, String seller, String lastBidder) {
         this.name = name;
         this.description = description;
         this.startingPrice = startingPrice;
         this.currentPrice = startingPrice;
         this.categories = categories;
         this.endingDate = endingDate;
+        this.seller = seller;
+        this.lastBidder = lastBidder;
     }
 
     public long getId() {
@@ -61,5 +67,13 @@ public class Article {
 
     public long getEndingDate() {
         return endingDate;
+    }
+
+    public String getSeller() {
+        return seller;
+    }
+
+    public String getLastBidder() {
+        return lastBidder;
     }
 }
