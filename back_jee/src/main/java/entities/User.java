@@ -50,6 +50,19 @@ public class User implements Serializable {
 
     }
 
+    public User(long id, String username, String password, String firstName, String lastName, String street, String city, int postcode, int houseNumber) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.street = street;
+        this.city = city;
+        this.postcode = postcode;
+        this.houseNumber = houseNumber;
+
+    }
+
     public long getId() {
         return this.id;
     }
@@ -85,6 +98,5 @@ public class User implements Serializable {
     public int getHouseNumber() {
         return houseNumber;
     }
-
 
 }

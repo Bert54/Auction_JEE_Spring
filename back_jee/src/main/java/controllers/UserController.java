@@ -10,7 +10,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import services.UserService;
 
-import javax.crypto.KeyGenerator;
 import javax.crypto.spec.SecretKeySpec;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -19,8 +18,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 
 import java.security.Key;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -73,7 +70,7 @@ public class UserController {
 
     @POST
     @Path("/login")
-    public Response loginUser(LoginUserDto user) throws NoSuchAlgorithmException {
+    public Response loginUser(LoginUserDto user) {
         if (user == null) {
             return Response.status(400, "No data provided").build();
         }
@@ -96,6 +93,15 @@ public class UserController {
         JWTTokenNeededFilter.UserInfo user = (JWTTokenNeededFilter.UserInfo)securityContext.getUserPrincipal();
         return Response.ok("{\n\"username\":\"" + user.getName() +
                 "\"\n}", MediaType.APPLICATION_JSON).build();
+    }
+
+    @GET
+    @JWTTokenNeeded
+    @Path("/info")
+    public Response getLoggedInUserInformations(@Context SecurityContext securityContext) {
+        User user = this.userService.getUser(securityContext.getUserPrincipal().getName());
+        return Response.ok(new User(user.getId(), user.getUsername(), null, user.getFirstName(), user.getLastName(),
+                user.getStreet(), user.getCity(), user.getPostcode(), user.getHouseNumber()), MediaType.APPLICATION_JSON).build();
     }
 
     private String issueToken(User user) {
