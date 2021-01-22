@@ -6,6 +6,7 @@ import dto.AddArticleDto;
 import dto.BidArticleDto;
 import entities.Article;
 import entities.Bid;
+import entities.Order;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -20,6 +21,9 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Inject
     private BidDao biddao;
+
+    @Inject
+    private OrderService orderService;
 
     @Override
     public Article addArticle(AddArticleDto article) {
@@ -36,6 +40,32 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public List<Article> getArticles(String username) {
         return this.articledao.findAll(username);
+    }
+
+    @Override
+    public List<Article> getBuyableArticles(String username) {
+        List<Article> articles = this.articledao.findFinished(username, System.currentTimeMillis() / 1000);
+        if (articles == null) {
+            return new ArrayList<>();
+        }
+        List<Order> orders = this.orderService.getOrdersByUsername(username);
+        if (orders == null) {
+            return articles;
+        }
+        List<Article> buyableArticles = new ArrayList<>();
+        for (Article a: articles) {
+            boolean ordered = false;
+            for (Order o: orders) {
+                if (a.getId() == o.getArticleId()) {
+                    ordered = true;
+                    break;
+                }
+            }
+            if (!ordered) {
+                buyableArticles.add(a);
+            }
+        }
+        return buyableArticles;
     }
 
     @Override

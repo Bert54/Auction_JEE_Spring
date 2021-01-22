@@ -16,6 +16,8 @@ public interface ArticleService {
 
     public List<Article> getArticles(String username);
 
+    public List<Article> getBuyableArticles(String username);
+
     public int deleteArticle(long id);
 
     public List<Article> filterArticles(String name, String categories);

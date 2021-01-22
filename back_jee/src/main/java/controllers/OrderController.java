@@ -29,7 +29,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 @Consumes(APPLICATION_JSON)
 @RequestScoped
 @Path("/orders")
-public class OfferController {
+public class OrderController {
 
     @Inject
     private OrderService orderService;
@@ -42,6 +42,26 @@ public class OfferController {
     public Response getOrders(@Context SecurityContext securityContext) {
         List<Order> orders = this.orderService.getOrdersByUsername(securityContext.getUserPrincipal().getName());
         return Response.ok(this.buildJsonArrayOrder(orders).build(), MediaType.APPLICATION_JSON).build();
+    }
+
+    @GET
+    @JWTTokenNeeded
+    @Path("/{id}")
+    public Response getOrder(@Context SecurityContext securityContext,
+                             @PathParam("id") long id) {
+        Order order = this.orderService.getOrderById(id);
+        if (order == null) {
+            return Response.status(404,
+                    "Order with id " + id + " was not found").build();
+        }
+        String username = securityContext.getUserPrincipal().getName();
+        if (!order.getBuyer().equals(username) &&
+                !this.articleService.getArticle(order.getArticleId()).getSeller().equals(username)) {
+            return Response.status(403,
+                    "Order with id " + id + " was not created by user " +
+                            username + " and is not the seller of its article").build();
+        }
+        return Response.ok(order, MediaType.APPLICATION_JSON).build();
     }
 
     @POST

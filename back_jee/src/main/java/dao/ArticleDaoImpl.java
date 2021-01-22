@@ -69,6 +69,15 @@ public class ArticleDaoImpl implements ArticleDao {
     }
 
     @Override
+    public List<Article> findFinished(String username, long timestamp) {
+        TypedQuery<Article> query = this.entityManager.getEntityManager().createQuery(
+                "SELECT a FROM Article AS a WHERE a.lastBidder = :username AND a.endingDate <= :timestamp", Article.class)
+                .setParameter("username", username)
+                .setParameter("timestamp", timestamp);
+        return query.getResultList();
+    }
+
+    @Override
     public Article save(Article article) {
         this.entityManager.getEntityManager().persist(article);
         return article;

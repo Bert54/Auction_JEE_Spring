@@ -8,7 +8,9 @@ import java.util.List;
 @Local
 public interface OrderDao {
 
-    public List<Order> fetchAll(String username);
+    public List<Order> findAll(String username);
+
+    public Order find(long id);
 
     public Order fetchByArticleId(long articleId);
 

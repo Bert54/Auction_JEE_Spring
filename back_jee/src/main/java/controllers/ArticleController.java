@@ -62,6 +62,14 @@ public class ArticleController {
     }
 
     @GET
+    @JWTTokenNeeded
+    @Path("/buyable")
+    public Response getAllBuyableArticles(@Context SecurityContext securityContext) {
+        List<Article> articles = this.articleService.getBuyableArticles(securityContext.getUserPrincipal().getName());
+        return Response.ok(this.buildJsonArrayArticle(articles).build(), MediaType.APPLICATION_JSON).build();
+    }
+
+    @GET
     @Path("/{id}")
     public Response getOneArticle(@PathParam("id") long id) {
         Article article = this.articleService.getArticle(id);

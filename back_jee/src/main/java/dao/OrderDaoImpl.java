@@ -16,11 +16,23 @@ public class OrderDaoImpl implements OrderDao {
     private EntityManagerProvider entityManager;
 
     @Override
-    public List<Order> fetchAll(String username) {
+    public List<Order> findAll(String username) {
         TypedQuery<Order> query = this.entityManager.getEntityManager().createQuery(
                 "SELECT o FROM Order AS o WHERE o.buyer = :username", Order.class)
                 .setParameter("username", username);
         return query.getResultList();
+    }
+
+    @Override
+    public Order find(long id) {
+        TypedQuery<Order> query = this.entityManager.getEntityManager().createQuery(
+                "SELECT o FROM Order AS o WHERE o.id = :id", Order.class)
+                .setParameter("id", id);
+        List<Order> result = query.getResultList();
+        if (result.isEmpty()) {
+            return null;
+        }
+        return result.get(0);
     }
 
     @Override

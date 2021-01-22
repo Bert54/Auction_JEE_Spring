@@ -21,6 +21,8 @@ public interface ArticleDao {
 
     public List<Article> find(String username);
 
+    public List<Article> findFinished(String username, long timestamp);
+
     public Article save(Article article);
 
     public int delete(long id);

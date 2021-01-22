@@ -11,6 +11,8 @@ public interface OrderService {
 
     public List<Order> getOrdersByUsername(String username);
 
+    public Order getOrderById(long id);
+
     public Order getOrderByArticleId(long articleId);
 
     public Order saveOrder(CreateOrderDto newOrder);

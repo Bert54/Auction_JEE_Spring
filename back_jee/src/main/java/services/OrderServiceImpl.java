@@ -16,7 +16,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> getOrdersByUsername(String username) {
-        return this.orderDao.fetchAll(username);
+        return this.orderDao.findAll(username);
+    }
+
+    @Override
+    public Order getOrderById(long id) {
+        return this.orderDao.find(id);
     }
 
     @Override
