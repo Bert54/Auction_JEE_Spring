@@ -18,11 +18,13 @@ public interface ArticleRepository extends CrudRepository<Article, Integer> {
     @Query("SELECT a FROM Article AS a WHERE LOWER(a.categories) LIKE LOWER(:category) AND a.endingDate > :timestamp")
     Iterable<Article> find(long timestamp, String category);
 
+    @Query("SELECT a FROM Article AS a WHERE a.id = :id")
+    Article find(Long id);
 
-    @Query("SELECT a FROM Article AS a WHERE a.seller = :username")
-    Iterable<Article> findAll(String username);
+    @Query("SELECT article FROM Article article WHERE article.name = :name")
+    Iterable<Article> findAll(String name);
 
-    @Query("SELECT a FROM Article AS a WHERE a.endingDate > :timestamp")
+    @Query("SELECT a FROM Article AS a WHERE a.endingDate = :timestamp")
     Iterable<Article> findAll(long timestamp);
 
     @Query("DELETE FROM Article a WHERE a.id = :id")

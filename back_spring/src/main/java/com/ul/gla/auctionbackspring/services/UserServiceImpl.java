@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
     public User signup(RegisterUserDto newUser) {
         String hashedPassword = this.hashService.hashPassword(newUser.getPassword());
         if (this.userDao.findByUsername(newUser.getUsername()) == null) {
-            User user = new User(newUser.getUsername(), hashedPassword);
+            User user = new User(newUser.getUsername(), hashedPassword,newUser.getFirstName(), newUser.getLastName(), newUser.getStreet(), newUser.getCity(), newUser.getPostcode(), newUser.getHouseNumber());
             return this.userDao.save(user);
         }
         return null;

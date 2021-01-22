@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { User } from '../shared/interfaces/User';
 import {MatchValidators} from '../shared/validators/MatchValidators';
 import {PasswordsStateMatcher} from '../shared/validators/PasswordsStateMatcher';
+import {AdressValidator} from '../shared/validators/AdressValidator';
+import {AdressStateMatcher} from '../shared/validators/AdressStateMatcher';
 
 @Component({
   selector: 'app-signup',
@@ -21,6 +23,7 @@ export class SignupComponent implements OnInit {
   private _hideC = true;
   public _matcher: PasswordsStateMatcher;
   public _registrationSuccess: boolean;
+  public _addressMatcher: AdressStateMatcher;
 
   constructor(private _authService: AuthenticationService, private _router: Router) {
     this._form = this.buildForm();
@@ -29,6 +32,7 @@ export class SignupComponent implements OnInit {
   ngOnInit(): void {
     this._registrationSuccess = false;
     this._matcher = new PasswordsStateMatcher();
+    this._addressMatcher = new AdressStateMatcher();
   }
 
   get form(): FormGroup {
@@ -39,10 +43,16 @@ export class SignupComponent implements OnInit {
     return new FormGroup({
       username: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
-      cpassword: new FormControl('')
+      cpassword: new FormControl(''),
+      firstName: new FormControl(''),
+      lastName: new FormControl(''),
+      street: new FormControl(''),
+      city: new FormControl(''),
+      postcode: new FormControl('',  Validators.pattern('(^[0-9]{5}|$)')),
+      houseNumber: new FormControl(''),
     },
       {
-        validators: MatchValidators.mustMatch
+        validators: Validators.compose([MatchValidators.mustMatch, AdressValidator.adressComplete])
       });
   }
 
@@ -77,26 +87,33 @@ export class SignupComponent implements OnInit {
 
   public signup(formValues: any): void {
     if (formValues.username && formValues.password) {
-      const user: User = {
-        username: formValues.username,
-        password: formValues.password
-      };
-      this._authService.createUser(user)
-        .subscribe(
-          _ => {
-            this._registrationSuccess = true;
-          },
-          err => {
-            this._hasError = true;
-            if (err.status === 409){
-              this._errorContent = 'User already exists';
-              console.log(err);
-            } else{
-              this._errorContent = err.status + ' : ' + err.message;
+        const user: User = {
+          username: formValues.username,
+          password: formValues.password,
+          firstName: formValues.firstName,
+          lastName: formValues.lastName,
+          street: formValues.street ? formValues.street : null,
+          city: formValues.city ? formValues.city : null,
+          postcode: formValues.postcode ? formValues.postcode : 0,
+          houseNumber: formValues.houseNumber ? formValues.houseNumber : 0
+        };
+        this._authService.createUser(user)
+          .subscribe(
+            _ => {
+              this._registrationSuccess = true;
+            },
+            err => {
+              this._hasError = true;
+              if (err.status === 409) {
+                this._errorContent = 'User already exists';
+                console.log(err);
+              } else {
+                this._errorContent = err.status + ' : ' + err.message;
+                console.log(err);
+              }
             }
-          }
-        );
-    }
+          );
+      }
   }
 
 }

@@ -47,6 +47,9 @@ public class ArticleController {
         newArticle.setSeller(securityContext.getUserPrincipal().getName());
         newArticle.setCurrentPrice(newArticle.getStartingPrice());
         Article article = this.articleService.addArticle(newArticle);
+        if (article == null) {
+            return Response.status(500, "Couldn't create article").build();
+        }
         return Response.ok(article, MediaType.APPLICATION_JSON).status(201).build();
     }
 

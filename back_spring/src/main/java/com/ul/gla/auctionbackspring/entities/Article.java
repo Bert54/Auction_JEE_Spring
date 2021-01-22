@@ -3,38 +3,47 @@ package com.ul.gla.auctionbackspring.entities;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Article")
+@Table(name = "article")
 public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @Column(name="NAME")
     private String name;
+    @Column(name="DESCRIPTION")
     private String description;
+    @Column(name="STARTINGPRICE")
     private double startingPrice;
+    @Column(name="CURRENTPRICE")
     private double currentPrice;
+    @Column(name="CATEGORIES")
     private String categories;  // Separator: ","
+    @Column(name="ENDINGDATE")
     private long endingDate;
-
+    @Column(name="SELLER")
     private String seller;
+    @Column(name="LASTBIDDER")
     private String lastBidder;
 
     public Article() {}
 
     /**
-     * There is no "actualPrice"  because it's defined by "startingPrice"
-     * @param name
-     * @param description
-     * @param startingPrice define the price for the article (and the actual price)
-     * @param categories
-     * @param endingDate
+     * Constructor for an article.
+     * We dosn't need lastBidder and currentPrice because :
+     * currentPrice is the startingPrice at the begin, and lastBidder is unknown at the start of the bid.
+     * @param name name of the product
+     * @param description description of the product
+     * @param startingPrice starting price of the product
+     * @param categories all the catégories: séparator : ","
+     * @param endingDate timestamp for the endingDate
+     * @param seller username of the seller
      */
-    public Article(String name, String description, double startingPrice, String categories,
-                   long endingDate, String seller, String lastBidder) {
+
+    public Article(String name, String description, double startingPrice, String categories, long endingDate, String seller, String lastbidder) {
         this.name = name;
         this.description = description;
         this.startingPrice = startingPrice;
-        this.currentPrice = startingPrice;
         this.categories = categories;
         this.endingDate = endingDate;
         this.seller = seller;

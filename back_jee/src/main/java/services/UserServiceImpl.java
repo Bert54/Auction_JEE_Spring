@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
         String hashedPassword = this.hashService.hashPassword(newUser.getPassword());
         List<User> results = this.userdao.find(newUser.getUsername());
         if (results.isEmpty()) {
-            User user = new User(newUser.getUsername(), hashedPassword);
+            User user = new User(newUser.getUsername(), hashedPassword,newUser.getFirstName(), newUser.getLastName(), newUser.getStreet(), newUser.getCity(), newUser.getPostcode(), newUser.getHouseNumber());
             user = this.userdao.save(user);
             return user;
         }

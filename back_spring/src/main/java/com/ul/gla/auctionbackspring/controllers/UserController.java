@@ -4,6 +4,7 @@ import com.ul.gla.auctionbackspring.configuration.JWTKey;
 import com.ul.gla.auctionbackspring.dto.LoginUserDto;
 import com.ul.gla.auctionbackspring.dto.RegisterUserDto;
 import com.ul.gla.auctionbackspring.entities.User;
+import com.ul.gla.auctionbackspring.exceptions.IncompleteAddressException;
 import com.ul.gla.auctionbackspring.exceptions.UserAlreadyExistsException;
 import com.ul.gla.auctionbackspring.exceptions.UserNotFoundException;
 import com.ul.gla.auctionbackspring.exceptions.UserUnauthorizedException;
@@ -35,6 +36,24 @@ public class UserController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public User signupUser(@RequestBody RegisterUserDto newUser) {
+        Boolean street = newUser.getStreet() != null;
+        Boolean city = newUser.getCity() != null;
+        Boolean postcode = newUser.getPostcode() != 0;
+        Integer pstCode = newUser.getPostcode();
+        if( street || city || postcode){
+            //System.out.println(street + " "+ city);
+            if(!street || !city || !postcode){
+                throw new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST, "incomplete address",
+                        new IncompleteAddressException("incomplete address"));
+            }
+            if(!pstCode.toString().matches("[0-9]{5}$")){
+                throw new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST, "postcode invalid",
+                        new IncompleteAddressException("postcode invalide"));
+            }
+
+        }
         User user = this.userService.signup(newUser);
         if (user == null) {
             throw new ResponseStatusException(
