@@ -10,7 +10,7 @@ public interface ArticleRepository  extends CrudRepository<Article, Integer> {
     Article findByName(String name);
 
     @Query("SELECT a FROM Article AS a WHERE a.id = :id")
-    Article find(long id);
+    Article find(Long id);
 
     @Query("SELECT a FROM Article AS a WHERE a.name LIKE :name AND a.endingDate > :timestamp")
     Iterable<Article> find(String name, long timestamp);
