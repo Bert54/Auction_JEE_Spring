@@ -15,7 +15,6 @@ public class ArticleController {
 @Autowired
 private ArticleService articleService;
 
-
     @GetMapping (value = "/all")
     public Iterable<Article> getAll(){
         return articleService.findAll();
@@ -24,8 +23,7 @@ private ArticleService articleService;
     @PostMapping (value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public void addArticle(AddArticleDto newArticle){
-
+    public void addArticle(@RequestBody AddArticleDto newArticle){
         Article article = this.articleService.addArticle(newArticle);
 //        if (article == null) {
 //            throw new ResponseStatusException(

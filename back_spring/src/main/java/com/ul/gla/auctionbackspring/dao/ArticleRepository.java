@@ -22,6 +22,7 @@ public interface ArticleRepository  extends CrudRepository<Article, Integer> {
     Iterable<Article> findAll(long timestamp);
 
 //    Iterable<Article> findAllByCategoriesContaining(String category);
+
     @Query("DELETE FROM Article a WHERE a.id = :id")
     int delete(long id);
 
