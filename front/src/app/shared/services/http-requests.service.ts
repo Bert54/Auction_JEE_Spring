@@ -9,6 +9,9 @@ import {JWT} from '../interfaces/JWT';
 import {Article} from '../interfaces/Article';
 import {Bid} from '../interfaces/Bid';
 import {Offer} from '../interfaces/Offer';
+import {Order} from '../interfaces/Order';
+import {NewOrder} from '../interfaces/NewOrder';
+import {Userinfo} from '../interfaces/Userinfo';
 
 @Injectable({
   providedIn: 'root'
@@ -75,9 +78,30 @@ export class HttpRequestsService {
     return this._http.post<Article>(this._backendURL.newBid, newBid, this._options());
   }
 
-  public getCurrentOffer(): Observable<Offer> {
+  public fetchCurrentOffer(): Observable<Offer> {
     return this._http.get<Offer>(this._backendURL.offers);
   }
+
+  public fetchAllOrders(): Observable<Order[]> {
+    return this._http.get<Order[]>(this._backendURL.allOrders);
+  }
+
+  public fetchBuyableArticles(): Observable<Article[]> {
+    return this._http.get<Article[]>(this._backendURL.buyableArticles);
+  }
+
+  public fetchOneOrder(id: string): Observable<Order> {
+    return this._http.get<Order>(this._backendURL.oneOrder.replace(':id', id));
+  }
+
+  public createOrder(order: NewOrder): Observable<any> {
+    return this._http.post<any>(this._backendURL.allOrders, order, this._options());
+  }
+
+  public fetchUserInfo(): Observable<Userinfo> {
+    return this._http.get<Userinfo>(this._backendURL.userinfo);
+  }
+
 
   private _options(headerList: object = {}): any {
     return { headers: new HttpHeaders(Object.assign({ 'Content-Type': 'application/json' }, headerList)) };

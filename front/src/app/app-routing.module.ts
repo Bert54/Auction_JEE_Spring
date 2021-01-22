@@ -11,6 +11,11 @@ import { SearchArticleComponent } from './search-article/search-article.componen
 import { UserBidsComponent } from './user-bids/user-bids.component';
 import { BidArticleComponent } from './bid-article/bid-article.component';
 import {ArticleActiveGuard} from './shared/guards/article-active.guard';
+import {OrdersComponent} from './orders/orders.component';
+import {OrderComponent} from './order/order.component';
+import {CreateOrderComponent} from './create-order/create-order.component';
+import {OrderViewableGuard} from './shared/guards/order-viewable.guard';
+import {ArticleNotOrderedGuard} from './shared/guards/article-not-ordered.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -23,6 +28,9 @@ const routes: Routes = [
   { path: 'articles/search', component: SearchArticleComponent },
   { path: 'articles/mybids', component: UserBidsComponent, canActivate: [LoggedInGuard] },
   { path: 'articles/bid/:id', component: BidArticleComponent, canActivate: [LoggedInGuard, ArticleActiveGuard] },
+  { path: 'orders', component: OrdersComponent, canActivate: [LoggedInGuard] },
+  { path: 'orders/:id', component: OrderComponent, canActivate: [LoggedInGuard, OrderViewableGuard] },
+  { path: 'orders/new/:id', component: CreateOrderComponent, canActivate: [LoggedInGuard, ArticleNotOrderedGuard] },
 ];
 
 @NgModule({

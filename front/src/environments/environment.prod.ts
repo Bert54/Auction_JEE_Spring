@@ -10,11 +10,15 @@ export const environment = {
       login: '/auctions/users/login',
       allArticles: '/auctions/articles',
       oneArticle: '/auctions/articles/:id',
-      createArticle: '/auctions/articles/add',
+      addOneArticle: '/auctions/articles/add',
       deleteOneArticle: '/auctions/articles/delete/:id',
       searchArticles: '/auctions/articles/search',
       newBid: '/auctions/articles/bid',
       userBids: '/auctions/articles/userbids',
+      offers: '/auctions/miscs/offers',
+      buyableArticles: '/auctions/articles/buyable',
+      allOrders: '/auctions/orders',
+      oneOrder: '/auctions/orders/:id',
     }
   }
 };

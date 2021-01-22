@@ -31,6 +31,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { SearchArticleComponent } from './search-article/search-article.component';
 import { UserBidsComponent } from './user-bids/user-bids.component';
 import { BidArticleComponent } from './bid-article/bid-article.component';
+import { OrdersComponent } from './orders/orders.component';
+import { OrderComponent } from './order/order.component';
+import { CreateOrderComponent } from './create-order/create-order.component';
 
 
 @NgModule({
@@ -45,7 +48,10 @@ import { BidArticleComponent } from './bid-article/bid-article.component';
     AddArticleComponent,
     SearchArticleComponent,
     UserBidsComponent,
-    BidArticleComponent
+    BidArticleComponent,
+    OrdersComponent,
+    OrderComponent,
+    CreateOrderComponent
   ],
   imports: [
     BrowserModule,

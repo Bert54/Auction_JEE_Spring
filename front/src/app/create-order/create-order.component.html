@@ -1,0 +1,73 @@
+<app-article></app-article>
+<mat-divider></mat-divider>
+<section>
+  <h1 style="margin-top:10px">Order article {{ article.name }}</h1>
+  <p>Please input your shipping informations below.</p>
+  <form [formGroup]="form">
+    <p>
+      <mat-form-field appearance="outline"[class.mgb15]="form.get('firstName').dirty && form.get('firstName')">
+        <mat-label>Firstname</mat-label>
+        <input matInput placeholder="FirstName" formControlName="firstName" required name="firstName"/>
+        <mat-error *ngIf="form.get('firstName').dirty && form.get('firstName').hasError('required')">
+          Firstname is required
+        </mat-error>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="outline"[class.mgb15]="form.get('lastName').dirty && form.get('lastName')">
+        <mat-label>Lastname</mat-label>
+        <input matInput placeholder="Last Name" formControlName="lastName" required name="lastName"/>
+        <mat-error *ngIf="form.get('lastName').dirty && form.get('lastName').hasError('required')">
+          Lastname is required
+        </mat-error>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="outline"[class.mgb15]="form.get('street').dirty && form.get('street').invalid">
+        <mat-label>Street</mat-label>
+        <input matInput placeholder="Street" formControlName="street" required name="street" />
+        <mat-error *ngIf="form.get('street').dirty && form.get('street').hasError('required')">
+          Street is required
+        </mat-error>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="outline"[class.mgb15]="form.get('city').dirty && form.get('city').invalid">
+        <mat-label>City</mat-label>
+        <input matInput placeholder="City" formControlName="city" required name="city" />
+        <mat-error *ngIf="form.get('city').dirty && form.get('city').hasError('required')">
+          City is required
+        </mat-error>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="outline"[class.mgb15]="form.get('postcode').dirty && form.get('postcode').invalid">
+        <mat-label>Postcode</mat-label>
+        <input matInput placeholder="Postcode" formControlName="postcode" required name="postcode" />
+        <mat-error *ngIf="form.get('postcode').dirty && form.get('postcode').hasError('postcode')">
+          Postcode is required
+        </mat-error>
+        <mat-error *ngIf="form.get('postcode').dirty && form.get('postcode').hasError('pattern')">
+          Postcode must be exactly 5 digits (ex: 12345)
+        </mat-error>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="outline"[class.mgb15]="form.get('houseNumber').dirty && form.get('houseNumber')">
+        <mat-label>House Number</mat-label>
+        <input matInput placeholder="House Number" formControlName="houseNumber" required name="houseNumber" type="number">
+        <mat-error *ngIf="form.get('houseNumber').dirty && form.get('houseNumber').hasError('required')">
+          House number is required
+        </mat-error>
+        <mat-error *ngIf="form.get('houseNumber').dirty && form.get('houseNumber').hasError('pattern')">
+          House number must be a positive number
+        </mat-error>
+      </mat-form-field>
+    </p>
+    <p>
+      <button mat-raised-button color="warn" (click)="submit()" [disabled]="form.invalid">
+        Create order
+      </button>
+    </p>
+  </form>
+</section>

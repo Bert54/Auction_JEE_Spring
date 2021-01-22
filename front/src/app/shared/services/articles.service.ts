@@ -40,4 +40,8 @@ export class ArticlesService {
     return this._http.sendNewBidOnArticle(newBid);
   }
 
+  public fetchBuyable(): Observable<Article[]> {
+    return this._http.fetchBuyableArticles();
+  }
+
 }

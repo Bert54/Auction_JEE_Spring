@@ -6,6 +6,7 @@ import { Username } from '../interfaces/Username';
 import { User } from '../interfaces/User';
 import { HttpRequestsService } from './http-requests.service';
 import {JWT} from '../interfaces/JWT';
+import {Userinfo} from '../interfaces/Userinfo';
 
 @Injectable({
   providedIn: 'root'
@@ -66,5 +67,11 @@ export class AuthenticationService {
   get userName(): string {
     return this._userName;
   }
+
+
+  public fetchUserInfo(): Observable<Userinfo> {
+    return this._http.fetchUserInfo();
+  }
+
 
 }

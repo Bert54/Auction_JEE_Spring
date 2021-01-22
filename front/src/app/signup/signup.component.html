@@ -69,12 +69,18 @@
       <mat-form-field appearance="outline"[class.mgb15]="form.get('postcode').dirty && form.get('postcode').invalid">
         <mat-label>Postcode</mat-label>
         <input matInput placeholder="Postcode" formControlName="postcode" name="postcode" [errorStateMatcher]="_addressMatcher"/>
+        <mat-error *ngIf="form.get('postcode').dirty && form.get('postcode').hasError('pattern')">
+          Postcode must be exactly 5 digits (ex: 12345)
+        </mat-error>
       </mat-form-field>
     </p>
     <p>
       <mat-form-field appearance="outline"[class.mgb15]="form.get('houseNumber').dirty && form.get('houseNumber')">
         <mat-label>House Number</mat-label>
         <input matInput placeholder="House Number" formControlName="houseNumber" name="houseNumber" type="number">
+        <mat-error *ngIf="form.get('houseNumber').dirty && form.get('houseNumber').hasError('pattern')">
+          House number must be a positive number
+        </mat-error>
       </mat-form-field>
     </p>
     <p>

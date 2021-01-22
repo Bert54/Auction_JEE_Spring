@@ -20,6 +20,10 @@ export const environment = {
       newBid: '/auctions/articles/bid',
       userBids: '/auctions/articles/userbids',
       offers: '/auctions/miscs/offers',
+      buyableArticles: '/auctions/articles/buyable',
+      allOrders: '/auctions/orders',
+      oneOrder: '/auctions/orders/:id',
+      userinfo: '/auctions/users/info',
     }
   }
 };

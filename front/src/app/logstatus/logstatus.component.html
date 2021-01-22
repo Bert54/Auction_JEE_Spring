@@ -8,9 +8,10 @@
     <p><a [routerLink]="['/articles/search']">Browse articles</a></p>
     <p><a [routerLink]="['/articles']">My articles</a></p>
     <p><a [routerLink]="['/articles/mybids']">My auctions</a></p>
+    <p><a [routerLink]="['/orders']">My orders</a></p>
     <div *ngIf="offerRebate > 0 && offerCategory !== ''">
       <p>Offer of the day: <strong>{{ offerRebate }}% off</strong> on <strong>{{ offerCategory }}</strong> articles</p>
-      <p>Order an item of this category of an auction you won and receive a rebate! (valid only within the 7 first days
+      <p>Order an item of this category of an auction you won and receive a rebate! (valid only within the 3 first days
         following the end of the auction)</p>
     </div>
   </span>

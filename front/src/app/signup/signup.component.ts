@@ -48,8 +48,8 @@ export class SignupComponent implements OnInit {
       lastName: new FormControl(''),
       street: new FormControl(''),
       city: new FormControl(''),
-      postcode: new FormControl('',  Validators.pattern('(^[0-9]{5}|$)')),
-      houseNumber: new FormControl(''),
+      postcode: new FormControl('', Validators.pattern('(^[0-9]{5}|$)')),
+      houseNumber: new FormControl('', Validators.pattern('(^[0-9]+|$)')),
     },
       {
         validators: Validators.compose([MatchValidators.mustMatch, AdressValidator.adressComplete])

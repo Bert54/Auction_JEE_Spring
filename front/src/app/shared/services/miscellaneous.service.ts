@@ -12,7 +12,7 @@ export class MiscellaneousService {
   constructor(private _http: HttpRequestsService) {}
 
   public getCurrentOffer(): Observable<Offer> {
-    return this._http.getCurrentOffer();
+    return this._http.fetchCurrentOffer();
   }
 
 }

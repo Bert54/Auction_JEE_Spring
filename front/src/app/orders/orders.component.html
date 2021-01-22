@@ -1,0 +1,34 @@
+<section>
+  <h1>My orders</h1>
+  <mat-list>
+    <mat-list-item *ngFor="let order of orders">
+      <div mat-line><strong>{{ fetchArticle(order.articleId).name }}</strong></div>
+      <div mat-line>Order ID: {{ order.id }}</div>
+      <div mat-line>Description: {{ fetchArticle(order.articleId).description }}</div>
+      <div mat-line>Price: {{ fetchArticle(order.articleId).currentPrice | number:'1.2-2' }}€</div>
+      <div mat-line>Seller: {{ fetchArticle(order.articleId).seller }}</div>
+      <div mat-line>Status: <u>{{ order.status }}</u></div>
+      <div mat-line style="margin-top:5px">
+        <button mat-raised-button color="primary" [routerLink]="['/orders', order.id]">Details</button>
+      </div>
+      <mat-divider></mat-divider>
+    </mat-list-item>
+  </mat-list>
+</section>
+<section style="margin-top: 10px">
+  <h1>Articles available for purchase</h1>
+  <mat-list>
+    <mat-list-item *ngFor="let article of articlesForSale">
+      <div mat-line><strong>{{ article.name }}</strong></div>
+      <div mat-line>Description: {{ article.description }}</div>
+      <div mat-line>Price: {{ article.currentPrice | number:'1.2-2' }}€</div>
+      <div mat-line>Seller: {{ article.seller }}</div>
+      <div mat-line>Article won the {{ article.endingDate * 1000 | date: 'dd-MM-yyyy HH:mm:ss' }}</div>
+      <div mat-line style="margin-top:5px">
+        <button mat-raised-button color="primary" style="margin-right:10px" [routerLink]="['/articles/details/', article.id]">Details</button>
+        <button mat-raised-button color="warn" [routerLink]="['/orders/new', article.id]">Order</button>
+      </div>
+      <mat-divider></mat-divider>
+    </mat-list-item>
+  </mat-list>
+</section>

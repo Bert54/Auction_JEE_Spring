@@ -1,0 +1,21 @@
+<h1>Order details</h1>
+<p><strong>Order no. {{ order.id }}</strong></p>
+<p>Status: <u>{{ order.status }}</u></p>
+<section>
+  <h2>Article informations</h2>
+  <p><strong>Article: {{ article.name }}</strong> (id: {{ article.id }})</p>
+  <p>Description: {{ article.description }}</p>
+  <p>Categorie(s): {{ article.categories }}</p>
+  <p>Price: {{ article.currentPrice | number:'1.2-2' }}€</p>
+  <p>Seller: {{ article.seller }}</p>
+</section>
+<section style="margin-top:20px;">
+  <h2>Shipping informations</h2>
+  <p>First name: {{ order.firstname }}</p>
+  <p>Last name: {{ order.lastname }}</p>
+  <p>
+    Shipping address:<br />
+    &nbsp;&nbsp;&nbsp;{{ order.street }}<br />
+    &nbsp;&nbsp;&nbsp;{{ order.zipcode }}&nbsp;{{ order.city }}
+  </p>
+</section>
