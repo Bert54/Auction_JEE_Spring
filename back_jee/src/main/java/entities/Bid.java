@@ -10,8 +10,10 @@ public class Bid {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @Column(name="BIDDER")
     private String bidder;
 
+    @Column(name="ARTICLEID")
     private long articleId;
 
     public Bid() {}

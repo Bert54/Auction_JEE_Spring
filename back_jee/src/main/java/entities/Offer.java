@@ -10,8 +10,10 @@ public class Offer {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @Column(name="CATEGORY")
     private String category;
 
+    @Column(name="REBATE")
     private int rebate;
 
     public Offer() {}

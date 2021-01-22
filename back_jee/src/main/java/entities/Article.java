@@ -11,20 +11,28 @@ public class Article implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @Column(name="NAME")
     private String name;
 
+    @Column(name="DESCRIPTION")
     private String description;
 
+    @Column(name="STARTINGPRICE")
     private double startingPrice;
 
+    @Column(name="CURRENTPRICE")
     private double currentPrice;
 
+    @Column(name="CATEGORIES")
     private String categories;
 
+    @Column(name="ENDINGDATE")
     private long endingDate;
 
+    @Column(name="SELLER")
     private String seller;
 
+    @Column(name="LASTBIDDER")
     private String lastBidder;
 
     public Article() {}

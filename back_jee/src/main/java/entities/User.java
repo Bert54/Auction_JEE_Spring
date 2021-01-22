@@ -11,21 +11,28 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(unique=true)
+    @Column(unique=true, name="USERNAME")
     private String username;
 
+    @Column(name="PASSWORD")
     private String password;
 
+    @Column(name="FIRSTNAME")
     private String firstName;
 
+    @Column(name="LASTNAME")
     private String lastName;
 
+    @Column(name="STREET")
     private String street;
 
+    @Column(name="CITY")
     private String city;
 
+    @Column(name="POSTCODE")
     private int postcode;
 
+    @Column(name="HOUSENUMBER")
     private int houseNumber;
 
     public User() {}

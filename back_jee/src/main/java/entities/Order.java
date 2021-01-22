@@ -10,21 +10,28 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @Column(name="BUYER")
     private String buyer;
 
-    @Column(unique=true)
+    @Column(unique=true, name="ARTICLEID")
     private long articleId;
 
+    @Column(name="STATUS")
     private String status;
 
+    @Column(name="FIRSTNAME")
     private String firstname;
 
+    @Column(name="LASTNAME")
     private String lastname;
 
+    @Column(name="STREET")
     private String street;
 
+    @Column(name="ZIPCODE")
     private int zipcode;
 
+    @Column(name="CITY")
     private String city;
 
     public Order() {}
