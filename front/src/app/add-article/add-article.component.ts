@@ -55,8 +55,9 @@ export class AddArticleComponent implements OnInit {
         article.categories = article.categories.concat(',');
       }
     }
-    article.endingDate = this.form.get('endingDate').value.getTime() / 1000;
+    article.endingDate =  Math.floor(this.form.get('endingDate').value.getTime() / 1000);
     article.startingPrice = Number(this.form.get('startingPrice').value);
+    console.log(article);
     this._articlesService.create(article).subscribe(
       _ => this._router.navigateByUrl('articles'),
       err => console.log(err)
