@@ -17,10 +17,11 @@ public class ArticleController {
 @Autowired
 private ArticleService articleService;
 
-    @GetMapping (value = "/all")
+    @GetMapping
     public Iterable<Article> getAll(){
         return articleService.findAll();
     }
+
 
     @PostMapping (value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
