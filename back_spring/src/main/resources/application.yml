@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: auctions
+  datasource:
+    url: jdbc:mysql://localhost:3306/gla
+    username: user
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    jpa:
+      properties:
+        hibernate.dialect:
+          org.hibernate:
+            dialect: MySQL5Dialect
+      show-sql: true
+      hibernate:
+        ddl-auto: update
+  profiles:
+    active: usage_message
+
+logging:
+  level:
+    org: ERROR
+
+tutorial:
+  client:
+    duration: 10000
+server:
+  port: 8080
+  error:
+    include-message: always
+
+
+
