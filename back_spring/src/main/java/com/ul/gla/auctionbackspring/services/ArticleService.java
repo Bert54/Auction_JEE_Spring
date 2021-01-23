@@ -4,6 +4,8 @@ import com.ul.gla.auctionbackspring.dto.AddArticleDto;
 import com.ul.gla.auctionbackspring.dto.BidArticleDto;
 import com.ul.gla.auctionbackspring.entities.Article;
 
+import java.util.List;
+
 public interface ArticleService {
 
     public Iterable<Article> findAll(String name);
@@ -21,4 +23,7 @@ public interface ArticleService {
     public int updateArticle(BidArticleDto bid);
 
     public Iterable<Article> getArticlesByUserBids(String username);
+
+    public Iterable<Article> getBuyableArticles(String username);
+
 }

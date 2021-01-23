@@ -6,6 +6,7 @@ import com.ul.gla.auctionbackspring.dto.AddArticleDto;
 import com.ul.gla.auctionbackspring.dto.BidArticleDto;
 import com.ul.gla.auctionbackspring.entities.Article;
 import com.ul.gla.auctionbackspring.entities.Bid;
+import com.ul.gla.auctionbackspring.entities.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +21,9 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
     private BidRepository biddao;
+
+    @Autowired
+    private OrderService orderService;
 
     @Override
     public Article addArticle(AddArticleDto article) {
@@ -93,5 +97,32 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Iterable<Article> getArticlesByUserBids(String username) {
         return this.articledao.find(username);
+    }
+
+
+    @Override
+    public Iterable<Article> getBuyableArticles(String username) {
+        Iterable<Article> articles = this.articledao.findFinished(username, System.currentTimeMillis() / 1000);
+        if (articles == null) {
+            return new ArrayList<>();
+        }
+        Iterable<Order> orders = this.orderService.getOrdersByUsername(username);
+        if (orders == null) {
+            return articles;
+        }
+        List<Article> buyableArticles = new ArrayList<>();
+        for (Article a: articles) {
+            boolean ordered = false;
+            for (Order o: orders) {
+                if (a.getId() == o.getArticleId()) {
+                    ordered = true;
+                    break;
+                }
+            }
+            if (!ordered) {
+                buyableArticles.add(a);
+            }
+        }
+        return buyableArticles;
     }
 }

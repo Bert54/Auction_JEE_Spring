@@ -13,6 +13,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "auctions/articles")
 public class ArticleController {
@@ -159,7 +161,11 @@ public class ArticleController {
         return this.articleService.getArticlesByUserBids(SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
-
+    @GetMapping(value = "/buyable")
+    public Iterable<Article> getAllBuyableArticles() {
+        Iterable<Article> articles = this.articleService.getBuyableArticles(SecurityContextHolder.getContext().getAuthentication().getName());
+        return articles;
+    }
 
 }
 

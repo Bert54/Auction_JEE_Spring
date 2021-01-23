@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 public interface ArticleRepository extends CrudRepository<Article, Integer> {
 
@@ -42,4 +43,8 @@ public interface ArticleRepository extends CrudRepository<Article, Integer> {
     @Modifying
     @Query("UPDATE Article e SET e.currentPrice = :amount, e.lastBidder = :bidder WHERE e.id = :id")
     int update(double amount, String bidder, long id);
+
+    @Query("SELECT a FROM Article AS a WHERE a.lastBidder = :username AND a.endingDate <= :timestamp")
+    Iterable<Article> findFinished(String username, long timestamp);
+
 }
