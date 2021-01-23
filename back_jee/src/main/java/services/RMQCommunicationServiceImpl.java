@@ -35,7 +35,7 @@ public class RMQCommunicationServiceImpl implements RMQCommunicationService {
 
     public int sendOrder(String id) {
         try {
-            channel.basicPublish(id, QUEUE_NAME_SEND, null, id.getBytes());
+            channel.basicPublish("", QUEUE_NAME_SEND, null, id.getBytes());
         } catch (Exception e) {
             return -1;
         }
