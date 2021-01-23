@@ -5,7 +5,7 @@ import com.ul.gla.auctionbackspring.entities.Article;
 
 public interface ArticleService {
 
-    public Iterable<Article> findAll();
+    public Iterable<Article> findAll(String name);
 
     public Article addArticle(AddArticleDto article);
 

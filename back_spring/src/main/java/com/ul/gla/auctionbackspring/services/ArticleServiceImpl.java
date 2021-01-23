@@ -22,8 +22,8 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public Iterable<Article> findAll() {
-        return articledao.findAll();
+    public Iterable<Article> findAll(String name) {
+        return articledao.findAll(name);
     }
 
     @Override

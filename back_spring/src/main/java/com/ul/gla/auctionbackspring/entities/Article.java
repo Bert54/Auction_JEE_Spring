@@ -44,6 +44,7 @@ public class Article {
         this.name = name;
         this.description = description;
         this.startingPrice = startingPrice;
+        this.currentPrice = startingPrice;
         this.categories = categories;
         this.endingDate = endingDate;
         this.seller = seller;
