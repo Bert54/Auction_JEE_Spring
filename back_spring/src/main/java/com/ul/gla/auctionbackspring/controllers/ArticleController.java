@@ -21,8 +21,8 @@ import java.util.List;
 @RequestMapping(value = "auctions/articles")
 public class ArticleController {
 
-@Autowired
-private ArticleService articleService;
+    @Autowired
+    private ArticleService articleService;
 
     @GetMapping
     public Iterable<Article> getAllArticle(){
@@ -161,3 +161,9 @@ private ArticleService articleService;
 
 
 }
+
+
+
+
+
+
