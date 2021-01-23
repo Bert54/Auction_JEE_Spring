@@ -48,6 +48,19 @@ public class Order {
         this.city = city;
     }
 
+    public Order(long id, String buyer, long articleId, String status, String firstname, String lastname,
+                 String street, int zipcode, String city) {
+        this.id = id;
+        this.buyer = buyer;
+        this.articleId = articleId;
+        this.status = status;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.street = street;
+        this.zipcode = zipcode;
+        this.city = city;
+    }
+
     public long getId() {
         return id;
     }

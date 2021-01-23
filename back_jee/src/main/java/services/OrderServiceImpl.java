@@ -51,21 +51,22 @@ public class OrderServiceImpl implements OrderService {
     public Order updateOrder(Order order) {
         switch (order.getStatus()) {
             case ORDERSTEPONE:
-                return this.updateOrderStatusSet(order.getId(), ORDERSTEPTWO);
+                return this.updateOrderStatusSet(order, ORDERSTEPTWO);
             case ORDERSTEPTWO:
-                return this.updateOrderStatusSet(order.getId(), ORDERSTEPTHREE);
+                return this.updateOrderStatusSet(order, ORDERSTEPTHREE);
             case ORDERSTEPTHREE:
-                return this.updateOrderStatusSet(order.getId(), ORDERSTEPFOUR);
+                return this.updateOrderStatusSet(order, ORDERSTEPFOUR);
         }
         return order;
     }
 
-    private Order updateOrderStatusSet(long orderId, String newStatus) {
-        int updated = this.orderDao.update(orderId, newStatus);
+    private Order updateOrderStatusSet(Order order, String newStatus) {
+        int updated = this.orderDao.update(order.getId(), newStatus);
         if (updated == 0) {
             return null;
         }
-        return this.orderDao.find(orderId);
+        return new Order(order.getId(), order.getBuyer(), order.getArticleId(), newStatus, order.getFirstname(),
+                order.getLastname(), order.getStreet(), order.getZipcode(), order.getCity());
     }
 
 }

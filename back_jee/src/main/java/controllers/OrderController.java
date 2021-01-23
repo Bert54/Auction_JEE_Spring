@@ -110,7 +110,7 @@ public class OrderController {
 
     @PUT
     @JWTTokenNeeded
-    @Path("/received/update/{:id}")
+    @Path("/received/update/{id}")
     public Response updateOrderStatus(@Context SecurityContext securityContext,
                                       @PathParam("id") long id) {
         Order order = this.orderService.getOrderById(id);
@@ -118,12 +118,17 @@ public class OrderController {
             return Response.status(404,
                     "order with id " + id + " was not found").build();
         }
+        if (!articleService.getArticle(order.getArticleId()).getSeller().equals(securityContext.getUserPrincipal().getName())) {
+            return Response.status(403,
+                    "Order with id " + order.getId() + " cannot be updated by " +
+                            securityContext.getUserPrincipal().getName()).build();
+        }
         order = this.orderService.updateOrder(order);
         if (order == null) {
             return Response.status(500,
                     "Could not update order with id " + id).build();
         }
-        return
+        return Response.ok(order, MediaType.APPLICATION_JSON).status(200).build();
     }
 
     private JsonArrayBuilder buildJsonArrayOrder(List<Order> orders) {

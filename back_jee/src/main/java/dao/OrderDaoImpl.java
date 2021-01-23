@@ -65,6 +65,7 @@ public class OrderDaoImpl implements OrderDao {
     public int update(long id, String newStatus) {
         return this.entityManager.getEntityManager().createQuery(
                 "UPDATE Order o SET o.status = :newStatus WHERE o.id = :id")
+                .setParameter("id", id)
                 .setParameter("newStatus", newStatus)
                 .executeUpdate();
     }
