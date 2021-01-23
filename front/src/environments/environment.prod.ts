@@ -19,6 +19,8 @@ export const environment = {
       buyableArticles: '/auctions/articles/buyable',
       allOrders: '/auctions/orders',
       oneOrder: '/auctions/orders/:id',
+      userinfo: '/auctions/users/info',
+      updateOrder: '/auctions/orders/received',
     }
   }
 };

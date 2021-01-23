@@ -16,6 +16,9 @@ import {OrderComponent} from './order/order.component';
 import {CreateOrderComponent} from './create-order/create-order.component';
 import {OrderViewableGuard} from './shared/guards/order-viewable.guard';
 import {ArticleNotOrderedGuard} from './shared/guards/article-not-ordered.guard';
+import {ReceivedOrdersComponent} from './received-orders/received-orders.component';
+import {UpdateOrderComponent} from './update-order/update-order.component';
+import {CanUpdateOrderGuard} from './shared/guards/can-update-order.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -31,6 +34,8 @@ const routes: Routes = [
   { path: 'orders', component: OrdersComponent, canActivate: [LoggedInGuard] },
   { path: 'orders/:id', component: OrderComponent, canActivate: [LoggedInGuard, OrderViewableGuard] },
   { path: 'orders/new/:id', component: CreateOrderComponent, canActivate: [LoggedInGuard, ArticleNotOrderedGuard] },
+  { path: 'orders/received/all', component: ReceivedOrdersComponent, canActivate: [LoggedInGuard] },
+  { path: 'orders/received/update/:id', component: UpdateOrderComponent, canActivate: [LoggedInGuard, CanUpdateOrderGuard] },
 ];
 
 @NgModule({

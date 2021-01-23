@@ -24,4 +24,8 @@ export class OrdersService {
     return this._http.createOrder(order);
   }
 
+  public fetchAllBySeller(): Observable<Order[]> {
+    return this._http.fetchAllOrdersBySeller();
+  }
+
 }
