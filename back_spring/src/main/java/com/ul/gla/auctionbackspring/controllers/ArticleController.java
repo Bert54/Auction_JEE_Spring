@@ -65,6 +65,39 @@ private ArticleService articleService;
         return article;
     }
 
+    @DeleteMapping(value = "/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Article deleteOneArticle(@PathVariable("id") long id) {
+        Article article = this.articleService.getArticle(id);
+        if (article == null) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Article with id " + id + " was not found",
+                    new Exception());
+        }
+        if (!SecurityContextHolder.getContext().getAuthentication().getName().equals(article.getSeller())) {
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN,
+                    "Article with id " + id + " does not belong to user " +
+                        SecurityContextHolder.getContext().getAuthentication().getName(),
+                    new Exception());
+        }
+        long timestamp = System.currentTimeMillis() / 1000;
+        if (article.getEndingDate() <= timestamp) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "The article's end date with id " + id + " has been reached." +
+                            " Articles with reached end dates cannot be deleted",
+                    new Exception());
+        }
+        int result = this.articleService.deleteArticle(id);
+        if (result == 0) {
+            throw new ResponseStatusException(
+                    HttpStatus.INTERNAL_SERVER_ERROR,
+                    "Could not delete article with id " + id,
+                    new Exception());
+        }
+        return article;
+    }
+
     @GetMapping (value = "/search")
     public Iterable<Article> getArticleByFilter(@RequestParam("name") String name, @RequestParam("categories") String categories) {
         return this.articleService.filterArticles(name, categories);
