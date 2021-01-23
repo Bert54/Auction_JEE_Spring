@@ -1,9 +1,10 @@
 /* tslint:disable:variable-name */
 import { Component, OnInit } from '@angular/core';
-import {Order} from '../shared/interfaces/Order';
-import {OrdersService} from '../shared/services/orders.service';
-import {Article} from '../shared/interfaces/Article';
-import {ArticlesService} from '../shared/services/articles.service';
+import { Order } from '../shared/interfaces/Order';
+import { OrdersService } from '../shared/services/orders.service';
+import { Article } from '../shared/interfaces/Article';
+import { ArticlesService } from '../shared/services/articles.service';
+import { UpdateOrderComponent } from '../update-order/update-order.component';
 
 @Component({
   selector: 'app-received-orders',
@@ -14,6 +15,8 @@ export class ReceivedOrdersComponent implements OnInit {
 
   private _orders: Order[];
   private _curArticles: Article[];
+
+  UpdateOrderComponent = UpdateOrderComponent;
 
   constructor(private _ordersService: OrdersService, private _articleService: ArticlesService) {
     this._orders = [];

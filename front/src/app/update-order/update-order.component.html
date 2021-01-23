@@ -1,1 +1,5 @@
 <app-order></app-order>
+<p [ngSwitch]="this.order.status">
+  <button mat-raised-button color="primary" *ngSwitchCase="UpdateOrderComponent.ORDERSTEPONE" (click)="updateOrder()">Confirm order</button>
+  <button mat-raised-button color="primary" *ngSwitchCase="UpdateOrderComponent.ORDERSTEPTWO" (click)="updateOrder()">Confirm article shipment</button>
+</p>

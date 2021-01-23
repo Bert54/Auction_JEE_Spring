@@ -28,4 +28,8 @@ export class OrdersService {
     return this._http.fetchAllOrdersBySeller();
   }
 
+  public updateStatus(id: string): Observable<any> {
+    return this._http.updateOrderStatus(id);
+  }
+
 }

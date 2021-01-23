@@ -20,7 +20,8 @@ export const environment = {
       allOrders: '/auctions/orders',
       oneOrder: '/auctions/orders/:id',
       userinfo: '/auctions/users/info',
-      updateOrder: '/auctions/orders/received',
+      receivedOrder: '/auctions/orders/received',
+      updateOrder: '/auctions/orders/received/update/:id',
     }
   }
 };
