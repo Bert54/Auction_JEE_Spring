@@ -44,6 +44,9 @@ public class ArticleController {
                 || newArticle.getEndingDate() == 0) {
             return Response.status(400, "Malformed body").build();
         }
+        if (newArticle.getEndingDate() <=  (System.currentTimeMillis() / 1000)) {
+            return Response.status(400, "End date cannot be in the past").build();
+        }
         newArticle.setSeller(securityContext.getUserPrincipal().getName());
         newArticle.setCurrentPrice(newArticle.getStartingPrice());
         Article article = this.articleService.addArticle(newArticle);
@@ -118,7 +121,7 @@ public class ArticleController {
         return Response.ok(this.buildJsonArrayArticle(articles).build(), MediaType.APPLICATION_JSON).build();
     }
 
-    @POST
+    @PUT
     @JWTTokenNeeded
     @Path("/bid")
     public Response bid(@Context SecurityContext securityContext,

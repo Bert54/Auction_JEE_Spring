@@ -100,6 +100,37 @@ public class OrderController {
         return Response.ok(order, MediaType.APPLICATION_JSON).status(201).build();
     }
 
+    @GET
+    @JWTTokenNeeded
+    @Path("/received")
+    public Response getOrdersToProcess(@Context SecurityContext securityContext) {
+        List<Order> orders = this.orderService.getOrdersBySeller(securityContext.getUserPrincipal().getName());
+        return Response.ok(this.buildJsonArrayOrder(orders).build(), MediaType.APPLICATION_JSON).build();
+    }
+
+    @PUT
+    @JWTTokenNeeded
+    @Path("/received/update/{id}")
+    public Response updateOrderStatus(@Context SecurityContext securityContext,
+                                      @PathParam("id") long id) {
+        Order order = this.orderService.getOrderById(id);
+        if (order == null) {
+            return Response.status(404,
+                    "order with id " + id + " was not found").build();
+        }
+        if (!articleService.getArticle(order.getArticleId()).getSeller().equals(securityContext.getUserPrincipal().getName())) {
+            return Response.status(403,
+                    "Order with id " + order.getId() + " cannot be updated by " +
+                            securityContext.getUserPrincipal().getName()).build();
+        }
+        order = this.orderService.updateOrder(order);
+        if (order == null) {
+            return Response.status(500,
+                    "Could not update order with id " + id).build();
+        }
+        return Response.ok(order, MediaType.APPLICATION_JSON).status(200).build();
+    }
+
     private JsonArrayBuilder buildJsonArrayOrder(List<Order> orders) {
         final Map<String, ?> config = Collections.emptyMap();
         JsonBuilderFactory factory = Json.createBuilderFactory(config);
