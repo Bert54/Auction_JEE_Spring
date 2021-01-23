@@ -1,8 +1,11 @@
 package com.ul.gla.auctionbackspring.services;
 
 import com.ul.gla.auctionbackspring.dao.ArticleRepository;
+import com.ul.gla.auctionbackspring.dao.BidRepository;
 import com.ul.gla.auctionbackspring.dto.AddArticleDto;
+import com.ul.gla.auctionbackspring.dto.BidArticleDto;
 import com.ul.gla.auctionbackspring.entities.Article;
+import com.ul.gla.auctionbackspring.entities.Bid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +17,9 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
     private ArticleRepository articledao;
+
+    @Autowired
+    private BidRepository biddao;
 
     @Override
     public Article addArticle(AddArticleDto article) {
@@ -73,5 +79,19 @@ public class ArticleServiceImpl implements ArticleService {
             articles = filteredList;
         }
         return articles;
+    }
+
+    @Override
+    public int updateArticle(BidArticleDto bid) {
+        int numAffected = this.articledao.update(bid);
+        if (numAffected != 0 && this.biddao.find(bid.getBidder(), bid.getId()) == null) {
+            this.biddao.save(new Bid(bid.getBidder(), bid.getId()));
+        }
+        return numAffected;
+    }
+
+    @Override
+    public Iterable<Article> getArticlesByUserBids(String username) {
+        return this.articledao.find(username);
     }
 }
