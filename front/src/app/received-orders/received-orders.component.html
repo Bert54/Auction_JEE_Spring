@@ -1,0 +1,15 @@
+<h1>Received orders</h1>
+<mat-list>
+  <mat-list-item *ngFor="let order of orders">
+    <div mat-line><strong>{{ fetchArticle(order.articleId).name }}</strong></div>
+    <div mat-line>Order ID: {{ order.id }}</div>
+    <div mat-line>Description: {{ fetchArticle(order.articleId).description }}</div>
+    <div mat-line>Price: {{ fetchArticle(order.articleId).currentPrice | number:'1.2-2' }}€</div>
+    <div mat-line>Buyer: {{ order.buyer }}</div>
+    <div mat-line>Status: <u>{{ order.status }}</u></div>
+    <div mat-line style="margin-top:5px">
+      <button mat-raised-button color="primary" [routerLink]="['/orders/received/update', order.id]">Details & update</button>
+    </div>
+    <mat-divider></mat-divider>
+  </mat-list-item>
+</mat-list>

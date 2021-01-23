@@ -36,7 +36,7 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public Order fetchByArticleId(long articleId) {
+    public Order findByArticleId(long articleId) {
         TypedQuery<Order> query = this.entityManager.getEntityManager().createQuery(
                 "SELECT o FROM Order AS o WHERE o.articleId = :articleId", Order.class)
                 .setParameter("articleId", articleId);
@@ -48,9 +48,25 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
+    public List<Order> findBySeller(String seller) {
+        TypedQuery<Order> query = this.entityManager.getEntityManager().createQuery(
+                "SELECT o FROM Order o JOIN Article a ON o.articleId = a.id WHERE a.seller = :seller", Order.class)
+                .setParameter("seller", seller);
+        return query.getResultList();
+    }
+
+    @Override
     public Order save(Order order) {
         this.entityManager.getEntityManager().persist(order);
         return order;
+    }
+
+    @Override
+    public int update(long id, String newStatus) {
+        return this.entityManager.getEntityManager().createQuery(
+                "UPDATE Order o SET o.status = :newStatus WHERE o.id = :id")
+                .setParameter("newStatus", newStatus)
+                .executeUpdate();
     }
 
 }

@@ -34,6 +34,8 @@ import { BidArticleComponent } from './bid-article/bid-article.component';
 import { OrdersComponent } from './orders/orders.component';
 import { OrderComponent } from './order/order.component';
 import { CreateOrderComponent } from './create-order/create-order.component';
+import { UpdateOrderComponent } from './update-order/update-order.component';
+import { ReceivedOrdersComponent } from './received-orders/received-orders.component';
 
 
 @NgModule({
@@ -51,7 +53,9 @@ import { CreateOrderComponent } from './create-order/create-order.component';
     BidArticleComponent,
     OrdersComponent,
     OrderComponent,
-    CreateOrderComponent
+    CreateOrderComponent,
+    UpdateOrderComponent,
+    ReceivedOrdersComponent
   ],
   imports: [
     BrowserModule,

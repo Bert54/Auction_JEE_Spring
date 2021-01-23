@@ -75,7 +75,7 @@ export class HttpRequestsService {
   }
 
   public sendNewBidOnArticle(newBid: Bid): Observable<any> {
-    return this._http.post<Article>(this._backendURL.newBid, newBid, this._options());
+    return this._http.put<Article>(this._backendURL.newBid, newBid, this._options());
   }
 
   public fetchCurrentOffer(): Observable<Offer> {
@@ -100,6 +100,10 @@ export class HttpRequestsService {
 
   public fetchUserInfo(): Observable<Userinfo> {
     return this._http.get<Userinfo>(this._backendURL.userinfo);
+  }
+
+  public fetchAllOrdersBySeller(): Observable<Order[]> {
+    return this._http.get<Order[]>(this._backendURL.receivedOrder);
   }
 
 

@@ -15,6 +15,10 @@ public interface OrderService {
 
     public Order getOrderByArticleId(long articleId);
 
+    public List<Order> getOrdersBySeller(String seller);
+
     public Order saveOrder(CreateOrderDto newOrder);
+
+    public Order updateOrder(Order order);
 
 }
