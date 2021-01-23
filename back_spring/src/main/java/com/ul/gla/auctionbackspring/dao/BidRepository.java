@@ -17,7 +17,7 @@ public interface BidRepository extends CrudRepository<Bid,Integer> {
 
     @Transactional
     @Modifying
-    @Query("DELETE FROM Bid b WHERE b.articleId = :id")
+    @Query("DELETE FROM Bid AS b WHERE b.id = :articleId")
     int delete(long articleId);
 
 }

@@ -23,10 +23,10 @@ public interface ArticleRepository extends CrudRepository<Article, Integer> {
     Iterable<Article> find(long timestamp, String category);
 
     @Query("SELECT a FROM Article a JOIN Bid b ON a.id = b.articleId WHERE b.bidder = :username ")
-    Iterable<Article> find(String username);
+    Iterable<Article> find(String username);  //This is for a user wich bid on sth
 
     @Query("SELECT article FROM Article article WHERE article.seller = :sellerName")
-    Iterable<Article> findAll(String sellerName);
+    Iterable<Article> findAll(String sellerName); //This is to get all the article from a SELLER
 
     @Query("SELECT a FROM Article AS a WHERE a.endingDate = :timestamp")
     Iterable<Article> findAll(long timestamp);

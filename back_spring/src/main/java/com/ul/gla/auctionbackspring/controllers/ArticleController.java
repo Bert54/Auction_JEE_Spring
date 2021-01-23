@@ -153,7 +153,7 @@ private ArticleService articleService;
 
     }
 
-    @GetMapping(name = "/userbids")
+    @GetMapping(value = "/userbids")
     public Iterable<Article> getUserBids(){
         return this.articleService.getArticlesByUserBids(SecurityContextHolder.getContext().getAuthentication().getName());
     }

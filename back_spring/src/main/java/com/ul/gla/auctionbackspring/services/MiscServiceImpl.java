@@ -23,7 +23,7 @@ public class MiscServiceImpl implements MiscService{
         return offerDao.find();
     }
 
-    @Scheduled(cron = "0 * * * * *")
+    @Scheduled(cron = "0 0 * * * *")
     public void generateNewOffer(){
         this.offerDao.delete();
         String[] categories = Categories.getInstance().getCategories();
