@@ -1,5 +1,6 @@
 package com.ul.gla.auctionbackspring.dao;
 
+import com.ul.gla.auctionbackspring.dto.BidArticleDto;
 import com.ul.gla.auctionbackspring.entities.Article;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -21,8 +22,8 @@ public interface ArticleRepository extends CrudRepository<Article, Integer> {
     @Query("SELECT a FROM Article AS a WHERE LOWER(a.categories) LIKE LOWER(:category) AND a.endingDate > :timestamp")
     Iterable<Article> find(long timestamp, String category);
 
-    @Query("SELECT a FROM Article AS a WHERE a.id = :id")
-    Article find(Long id);
+    @Query("SELECT a FROM Article a JOIN Bid b ON a.id = b.articleId WHERE b.bidder = :username ")
+    Iterable<Article> find(String username);
 
     @Query("SELECT article FROM Article article WHERE article.seller = :sellerName")
     Iterable<Article> findAll(String sellerName);
@@ -36,4 +37,9 @@ public interface ArticleRepository extends CrudRepository<Article, Integer> {
     int delete(long id);
 
     Article save(Article article);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE Article e SET e.currentPrice = :amount,e.lastBidder = :bidder WHERE e.id = :id")
+    int update(BidArticleDto bid);
 }
