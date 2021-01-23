@@ -150,7 +150,6 @@ public class ArticleController {
                     + bid.getId(),
                     new Exception());
         }
-        System.out.println(bid.getId());
         return this.articleService.getArticle(bid.getId());
 
     }
