@@ -12,8 +12,12 @@ public interface OrderDao {
 
     public Order find(long id);
 
-    public Order fetchByArticleId(long articleId);
+    public Order findByArticleId(long articleId);
+
+    public List<Order> findBySeller(String seller);
 
     public Order save(Order order);
+
+    public int update(long id, String newStatus);
 
 }
