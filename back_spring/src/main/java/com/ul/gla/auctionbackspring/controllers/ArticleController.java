@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.websocket.server.PathParam;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "auctions/articles")
@@ -63,4 +64,10 @@ private ArticleService articleService;
         }
         return article;
     }
+
+    @GetMapping (value = "/search")
+    public Iterable<Article> getArticleByFilter(@RequestParam("name") String name, @RequestParam("categories") String categories) {
+        return this.articleService.filterArticles(name, categories);
+        }
+
 }
