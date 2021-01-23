@@ -47,6 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         security.authorizeRequests()
                 .antMatchers(HttpMethod.POST,"/auctions/users/signup").permitAll()
                 .antMatchers(HttpMethod.POST,"/auctions/users/login").permitAll()
+                .antMatchers(HttpMethod.GET,"/auctions/articles/search").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

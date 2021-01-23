@@ -3,7 +3,6 @@ package com.ul.gla.auctionbackspring.controllers;
 import com.ul.gla.auctionbackspring.dto.AddArticleDto;
 import com.ul.gla.auctionbackspring.dto.BidArticleDto;
 import com.ul.gla.auctionbackspring.entities.Article;
-import com.ul.gla.auctionbackspring.entities.Bid;
 import com.ul.gla.auctionbackspring.exceptions.ArticleNotFoundException;
 import com.ul.gla.auctionbackspring.exceptions.ArticleWithMalformedBodyException;
 import com.ul.gla.auctionbackspring.services.ArticleService;
@@ -13,9 +12,6 @@ import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-
-import javax.websocket.server.PathParam;
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "auctions/articles")
@@ -101,7 +97,7 @@ public class ArticleController {
     }
 
     @GetMapping (value = "/search")
-    public Iterable<Article> getArticleByFilter(@RequestParam("name") String name, @RequestParam("categories") String categories) {
+    public Iterable<Article> getArticleByFilter(@RequestParam(required = false) String name, @RequestParam(required = false) String categories) {
         return this.articleService.filterArticles(name, categories);
     }
 

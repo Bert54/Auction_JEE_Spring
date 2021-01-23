@@ -59,14 +59,14 @@ public class ArticleServiceImpl implements ArticleService {
         }
         Iterable<Article> articles = null;
         if (name != null && !name.equals("")) {
-            articles = this.articledao.find(name, System.currentTimeMillis() / 1000);
+            articles = this.articledao.find("%" + name + "%", System.currentTimeMillis() / 1000);
 
         }
         if (articles == null && categoriesArr.length == 0) {
             return this.articledao.findAll(System.currentTimeMillis() / 1000);
         }
         if (articles == null) {
-            articles = this.articledao.find(System.currentTimeMillis() / 1000, categoriesArr[0]);
+            articles = this.articledao.find(System.currentTimeMillis() / 1000, "%" + categoriesArr[0] + "%");
             iterationStart = 1;
         }
         for (int i = iterationStart ; i < categoriesArr.length ; i++) {

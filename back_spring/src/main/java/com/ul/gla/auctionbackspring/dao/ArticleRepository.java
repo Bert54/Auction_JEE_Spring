@@ -28,7 +28,7 @@ public interface ArticleRepository extends CrudRepository<Article, Integer> {
     @Query("SELECT article FROM Article article WHERE article.seller = :sellerName")
     Iterable<Article> findAll(String sellerName); //This is to get all the article from a SELLER
 
-    @Query("SELECT a FROM Article AS a WHERE a.endingDate = :timestamp")
+    @Query("SELECT a FROM Article AS a WHERE a.endingDate > :timestamp")
     Iterable<Article> findAll(long timestamp);
 
     @Transactional
