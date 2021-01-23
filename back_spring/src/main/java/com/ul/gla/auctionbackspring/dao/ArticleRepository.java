@@ -40,6 +40,6 @@ public interface ArticleRepository extends CrudRepository<Article, Integer> {
 
     @Transactional
     @Modifying
-    @Query("UPDATE Article e SET e.currentPrice = :amount,e.lastBidder = :bidder WHERE e.id = :id")
-    int update(BidArticleDto bid);
+    @Query("UPDATE Article e SET e.currentPrice = :amount, e.lastBidder = :bidder WHERE e.id = :id")
+    int update(double amount, String bidder, long id);
 }

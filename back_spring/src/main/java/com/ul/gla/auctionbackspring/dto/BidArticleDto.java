@@ -1,9 +1,10 @@
 package com.ul.gla.auctionbackspring.dto;
 
 public class BidArticleDto {
-    long id;
-    float amount;
-    String bidder;
+
+    private long id;
+    private float amount;
+    private String bidder;
 
     public long getId() {
         return id;
@@ -14,7 +15,7 @@ public class BidArticleDto {
     }
 
     public float getAmount() {
-        return amount;
+        return this.amount;
     }
 
     public void setAmount(float amount) {

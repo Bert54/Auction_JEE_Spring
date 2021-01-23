@@ -106,7 +106,7 @@ public class ArticleController {
     }
 
     @PutMapping(value = "/bid")
-    public Article bid(BidArticleDto bid){
+    public Article bid(@RequestBody BidArticleDto bid){
         if(bid == null || bid.getId() == 0 || bid.getAmount() == 0){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Malformed body",new Exception());
         }
@@ -149,6 +149,7 @@ public class ArticleController {
                     + bid.getId(),
                     new Exception());
         }
+        System.out.println(bid.getId());
         return this.articleService.getArticle(bid.getId());
 
     }

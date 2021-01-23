@@ -83,7 +83,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public int updateArticle(BidArticleDto bid) {
-        int numAffected = this.articledao.update(bid);
+        int numAffected = this.articledao.update(bid.getAmount(), bid.getBidder(), bid.getId());
         if (numAffected != 0 && this.biddao.find(bid.getBidder(), bid.getId()) == null) {
             this.biddao.save(new Bid(bid.getBidder(), bid.getId()));
         }
