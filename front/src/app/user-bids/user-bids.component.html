@@ -3,7 +3,7 @@
   <mat-list>
     <mat-list-item *ngFor="let article of articles">
       <div mat-line><strong>{{ article.name }}</strong></div>
-      <div mat-line>Current bid: {{ article.currentPrice }}</div>
+      <div mat-line>Current bid: {{ article.currentPrice | number:'1.2-2' }}€</div>
       <div mat-line>Last bidder: {{ article.lastBidder }}</div>
       <div mat-line *ngIf="isActive(article.endingDate)">Ends the: {{ article.endingDate * 1000 | date: 'dd-MM-yyyy HH:mm:ss' }}</div>
       <div mat-line *ngIf="isActive(article.endingDate)">

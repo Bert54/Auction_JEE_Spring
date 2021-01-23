@@ -5,6 +5,7 @@ import { Article } from '../shared/interfaces/Article';
 import { ArticlesService } from '../shared/services/articles.service';
 import { Router } from '@angular/router';
 import { Categories } from '../shared/data/categories';
+import {NewArticleDateValid} from '../shared/validators/NewArticleDateValid';
 
 @Component({
   selector: 'app-add-article',
@@ -42,7 +43,10 @@ export class AddArticleComponent implements OnInit {
         Validators.pattern('^[0-9]+\(\.[0-9]{1,2}\)?$'),
       ])),
       categories: new FormControl('', Validators.required),
-      endingDate: new FormControl('', Validators.required)
+      endingDate: new FormControl('', Validators.compose([
+        Validators.required,
+        NewArticleDateValid.isInTheFutur
+      ]))
     });
   }
 

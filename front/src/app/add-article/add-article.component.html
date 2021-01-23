@@ -45,6 +45,9 @@
       <mat-error *ngIf="form.get('endingDate').dirty && form.get('endingDate').hasError('required')">
         Ending date is required
       </mat-error>
+      <mat-error *ngIf="form.get('endingDate').dirty && form.get('endingDate').hasError('inPast')">
+        Ending date must be in the futur
+      </mat-error>
     </mat-form-field>
   </p>
   <p>
