@@ -52,6 +52,11 @@ public class ArticleController {
                     HttpStatus.BAD_REQUEST, "Malformed body, please put one name, at least one category and an ending date",
                     new ArticleWithMalformedBodyException());
         }
+        if (newArticle.getEndingDate() <=  (System.currentTimeMillis() / 1000)) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "End date cannot be in the past",
+                    new Exception());
+        }
         newArticle.setSeller(SecurityContextHolder.getContext().getAuthentication().getName());
         newArticle.setCurrentPrice(newArticle.getStartingPrice());
         Article article = this.articleService.addArticle(newArticle);
