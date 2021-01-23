@@ -7,8 +7,9 @@
     <div mat-line>Price: {{ fetchArticle(order.articleId).currentPrice | number:'1.2-2' }}€</div>
     <div mat-line>Buyer: {{ order.buyer }}</div>
     <div mat-line>Status: <u>{{ order.status }}</u></div>
-    <div mat-line style="margin-top:5px">
-      <button mat-raised-button color="primary" [routerLink]="['/orders/received/update', order.id]">Details & update</button>
+    <div mat-line>
+      <button mat-raised-button color="primary" *ngIf="order.status === UpdateOrderComponent.ORDERSTEPONE || order.status === UpdateOrderComponent.ORDERSTEPTWO" [routerLink]="['/orders/received/update', order.id]">Details & update</button>
+      <button mat-raised-button color="primary" *ngIf="order.status !== UpdateOrderComponent.ORDERSTEPONE && order.status !== UpdateOrderComponent.ORDERSTEPTWO" [routerLink]="['/orders/received/update', order.id]">Details</button>
     </div>
     <mat-divider></mat-divider>
   </mat-list-item>

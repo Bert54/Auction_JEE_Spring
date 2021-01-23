@@ -106,6 +106,10 @@ export class HttpRequestsService {
     return this._http.get<Order[]>(this._backendURL.receivedOrder);
   }
 
+  public updateOrderStatus(id: string): Observable<any> {
+    return this._http.put<any>(this._backendURL.updateOrder.replace(':id', id), this._options());
+  }
+
 
   private _options(headerList: object = {}): any {
     return { headers: new HttpHeaders(Object.assign({ 'Content-Type': 'application/json' }, headerList)) };
