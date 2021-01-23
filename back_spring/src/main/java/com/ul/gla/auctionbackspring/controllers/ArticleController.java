@@ -23,8 +23,8 @@ public class ArticleController {
 private ArticleService articleService;
 
     @GetMapping
-    public Iterable<Article> getAll(){
-        return articleService.findAll();
+    public Iterable<Article> getAllArticle(){
+        return articleService.findAll(SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
     @GetMapping(value = "/{id}")
@@ -102,5 +102,6 @@ private ArticleService articleService;
     public Iterable<Article> getArticleByFilter(@RequestParam("name") String name, @RequestParam("categories") String categories) {
         return this.articleService.filterArticles(name, categories);
         }
+
 
 }

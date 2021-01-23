@@ -24,8 +24,8 @@ public interface ArticleRepository extends CrudRepository<Article, Integer> {
     @Query("SELECT a FROM Article AS a WHERE a.id = :id")
     Article find(Long id);
 
-    @Query("SELECT article FROM Article article WHERE article.name = :name")
-    Iterable<Article> findAll(String name);
+    @Query("SELECT article FROM Article article WHERE article.seller = :sellerName")
+    Iterable<Article> findAll(String sellerName);
 
     @Query("SELECT a FROM Article AS a WHERE a.endingDate = :timestamp")
     Iterable<Article> findAll(long timestamp);
