@@ -45,7 +45,7 @@ private ArticleService articleService;
     public Article addArticle(@RequestBody AddArticleDto newArticle){
         if (newArticle == null) {
             throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, "NO data provided",
+                    HttpStatus.BAD_REQUEST, "No data provided",
                     new Exception());
         }
         if(newArticle.getName() == null || newArticle.getCategories() == null || newArticle.getEndingDate() == 0) {
