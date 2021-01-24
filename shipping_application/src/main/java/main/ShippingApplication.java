@@ -44,7 +44,6 @@ public class ShippingApplication {
         boolean exit = false;
         Scanner scan = new Scanner(System.in);
         System.out.println("Enter the ID of the order you wish confirm shipment for.");
-        System.out.println("Enter 'exit' to exit the application.");
         while (true) {
             String userInput = scan.nextLine();
             try {
