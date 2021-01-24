@@ -8,6 +8,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {OrdersService} from '../shared/services/orders.service';
 import {NewOrder} from '../shared/interfaces/NewOrder';
 import {AuthenticationService} from '../shared/services/authentication.service';
+import {Offer} from '../shared/interfaces/Offer';
+import {MiscellaneousService} from '../shared/services/miscellaneous.service';
 
 @Component({
   selector: 'app-create-order',
@@ -19,11 +21,13 @@ export class CreateOrderComponent implements OnInit {
   private readonly _form: FormGroup;
 
   private _article: Article;
+  private _currentOffer: Offer;
 
   constructor(private _articlesService: ArticlesService, private _ordersService: OrdersService, private _route: ActivatedRoute,
-              private _router: Router, private _authService: AuthenticationService) {
+              private _router: Router, private _authService: AuthenticationService, private _miscellaneousService: MiscellaneousService) {
     this._article = {} as Article;
     this._form = this.buildForm();
+    this._currentOffer = {} as Offer;
   }
 
   ngOnInit(): void {
@@ -33,6 +37,10 @@ export class CreateOrderComponent implements OnInit {
     });
     this._authService.fetchUserInfo().subscribe(
       userinfo => this._form.patchValue(userinfo),
+      err => console.log(err)
+    );
+    this._miscellaneousService.getCurrentOffer().subscribe(
+      offer => this._currentOffer = offer,
       err => console.log(err)
     );
   }
@@ -59,6 +67,27 @@ export class CreateOrderComponent implements OnInit {
       _ => this._router.navigateByUrl('orders'),
       err => console.log(err)
     );
+  }
+
+  public isRebateApplicable(): boolean {
+    if (this._article.categories === undefined) {
+      return false;
+    }
+    const articleCategories = this._article.categories.split(',');
+    if (this._article.endingDate > Math.floor(Date.now() / 1000) + 259200) {
+      return false;
+    }
+    for (let i = 0 ; i < articleCategories.length ; i++) {
+      if (this._currentOffer.category === articleCategories[i]) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public calculateRebate(articlePrice: number): number {
+    const percentage = (100 - this._currentOffer.rebate) / 100;
+    return articlePrice * percentage;
   }
 
   private buildForm(): FormGroup {

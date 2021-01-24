@@ -64,6 +64,12 @@
         </mat-error>
       </mat-form-field>
     </p>
+    <p *ngIf="isRebateApplicable()">
+      Amount you will pay: <s>{{ article.currentPrice | number:'1.2-2' }}€</s>&nbsp;<span style="color:red">{{ calculateRebate(article.currentPrice) | number:'1.2-2' }}€</span>
+    </p>
+    <p *ngIf="!isRebateApplicable()">
+      Amount you will pay: {{ article.currentPrice | number:'1.2-2' }}€
+    </p>
     <p>
       <button mat-raised-button color="warn" (click)="submit()" [disabled]="form.invalid">
         Create order

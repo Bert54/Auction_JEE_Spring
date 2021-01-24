@@ -21,7 +21,8 @@
     <mat-list-item *ngFor="let article of articlesForSale">
       <div mat-line><strong>{{ article.name }}</strong></div>
       <div mat-line>Description: {{ article.description }}</div>
-      <div mat-line>Price: {{ article.currentPrice | number:'1.2-2' }}€</div>
+      <div mat-line *ngIf="isRebateApplicable(article)">Price: <s>{{ article.currentPrice | number:'1.2-2' }}€</s>&nbsp;<span style="color:red">{{ calculateRebate(article.currentPrice) | number:'1.2-2' }}€</span></div>
+      <div mat-line *ngIf="!isRebateApplicable(article)">Price: {{ article.currentPrice | number:'1.2-2' }}€</div>
       <div mat-line>Seller: {{ article.seller }}</div>
       <div mat-line>Article won the {{ article.endingDate * 1000 | date: 'dd-MM-yyyy HH:mm:ss' }}</div>
       <div mat-line style="margin-top:5px">

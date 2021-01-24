@@ -5,9 +5,7 @@ import { Order } from '../shared/interfaces/Order';
 import { ArticlesService } from '../shared/services/articles.service';
 import { Article } from '../shared/interfaces/Article';
 import { Offer } from '../shared/interfaces/Offer';
-import { Router } from '@angular/router';
 import { MiscellaneousService } from '../shared/services/miscellaneous.service';
-import { Categories } from '../shared/data/categories';
 
 @Component({
   selector: 'app-orders',
@@ -72,17 +70,21 @@ export class OrdersComponent implements OnInit {
   }
 
   public isRebateApplicable(article: Article): boolean {
-    const categories = Categories;
     const articleCategories = article.categories.split(',');
     if (article.endingDate > Math.floor(Date.now() / 1000) + 259200) {
       return false;
     }
-    for (let i = 0 ; i < categories.length ; i++) {
-      if (articleCategories.includes(categories[i])) {
+    for (let i = 0 ; i < articleCategories.length ; i++) {
+      if (this._currentOffer.category === articleCategories[i]) {
         return true;
       }
     }
     return false;
+  }
+
+  public calculateRebate(articlePrice: number): number {
+    const percentage = (100 - this._currentOffer.rebate) / 100;
+    return articlePrice * percentage;
   }
 
 }
