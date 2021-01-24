@@ -13,7 +13,7 @@ public class Order {
     private String buyer;
 
     @Column(name="PRICE")
-    private  double price;
+    private double price;
 
     @Column(unique=true, name="ARTICLEID")
     private long articleId;
