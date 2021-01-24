@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface UserRepository extends CrudRepository<User, Integer> {
 
-    @Query("SELECT user FROM User user WHERE user.username = :username")
+    @Query("SELECT user FROM User user WHERE LOWER(user.username) = LOWER(:username)")
     User findByUsername(String username);
 
     User save(User user);

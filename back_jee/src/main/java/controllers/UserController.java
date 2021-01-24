@@ -49,7 +49,6 @@ public class UserController {
         Boolean postcode = newUser.getPostcode() != 0;
         Integer pstCode = new Integer(newUser.getPostcode());
         if( street || city || postcode){
-            //System.out.println(street + " "+ city);
             if(!street || !city || !postcode){
                 return Response.status(400,"incomplete address").build();
             }
