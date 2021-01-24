@@ -1,7 +1,11 @@
 package services;
 
+import dao.ArticleDao;
+import dao.OfferDao;
 import dao.OrderDao;
 import dto.CreateOrderDto;
+import entities.Article;
+import entities.Offer;
 import entities.Order;
 
 import javax.ejb.Stateless;
@@ -17,8 +21,16 @@ public class OrderServiceImpl implements OrderService {
     private static final String ORDERSTEPFOUR = "Order awaiting shipment";
     private static final String ORDERSTEPFIVE = "Order shipped";
 
+    private static final long TIMEOFEFFECTIVEPROMOTION = 259200; //it's in second, Dont forget to do the /1000 with the timestamp compared with this
+
     @Inject
     private OrderDao orderDao;
+
+    @Inject
+    private OfferDao offerDao;
+
+    @Inject
+    private ArticleDao articleDao;
 
     @Inject
     private RMQCommunicationService communicationService;
@@ -45,7 +57,19 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order saveOrder(CreateOrderDto newOrder) {
-        Order order = new Order(newOrder.getBuyer(), newOrder.getArticleId(), ORDERSTEPONE, newOrder.getFirstname(),
+        //On check si la date de timestamp est inférieur a 3 jour par rapport à aujourd'hui
+        //on check si y a une promo effective sur la catégorie du produit
+        Article article =  articleDao.find(newOrder.getArticleId());
+        newOrder.setPrice(article.getCurrentPrice());
+        Offer offer;
+        if(article.getEndingDate() + TIMEOFEFFECTIVEPROMOTION >= System.currentTimeMillis() / 1000 ){ //If the offer can be effective
+            offer = offerDao.find();
+            if(articleOfferGotOneCategorieInCommon(article, offer)){
+                double newPrice = newOrder.getPrice() - newOrder.getPrice() * (offer.getRebate() /100.0);//On fait la reduction sur l'OrderDto
+                newOrder.setPrice(newPrice);
+            }
+        }
+        Order order = new Order(newOrder.getBuyer(), newOrder.getPrice(), newOrder.getArticleId(), ORDERSTEPONE, newOrder.getFirstname(),
                 newOrder.getLastname(), newOrder.getStreetNumber() + " " + newOrder.getStreetName(),
                 newOrder.getZipcode(), newOrder.getCity());
         return this.orderDao.save(order);
@@ -91,8 +115,42 @@ public class OrderServiceImpl implements OrderService {
         if (updated == 0) {
             return null;
         }
-        return new Order(order.getId(), order.getBuyer(), order.getArticleId(), newStatus, order.getFirstname(),
+        return new Order(order.getId(), order.getBuyer(), order.getPrice(), order.getArticleId(), newStatus, order.getFirstname(),
                 order.getLastname(), order.getStreet(), order.getZipcode(), order.getCity());
+    }
+
+    /**
+     * Compare the categorie of the two
+     * @param article an article
+     * @param offer an offer
+     * @return true if there is a match
+     */
+    private boolean articleOfferGotOneCategorieInCommon(Article article, Offer offer){
+        String articleCategories = article.getCategories();
+        String[] categoriesArr;
+        if (articleCategories != null && !articleCategories.equals("")) {
+            categoriesArr = articleCategories.split(",", -1);
+        }
+        else {
+            categoriesArr = new String[0];
+        }
+
+        return compareCategories(categoriesArr, offer.getCategory());
+    }
+
+    /**
+     * Compare an array of categorie with a string
+     * @param articleCategories the array corresponding an article
+     * @param offerCategorie  the offer we want to compare to
+     * @return boolean true if there is a match
+     */
+    private boolean compareCategories(String[] articleCategories, String offerCategorie){
+        for(String a : articleCategories){
+            if(a.equals(offerCategorie)){
+                return  true;
+            }
+        }
+        return false;
     }
 
 }

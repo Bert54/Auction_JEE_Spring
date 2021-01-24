@@ -139,6 +139,7 @@ public class OrderController {
             ordersJson.add(factory.createObjectBuilder()
                     .add("id", order.getId())
                     .add("buyer", order.getBuyer() + "")
+                    .add("price", order.getPrice())
                     .add("articleId", order.getArticleId())
                     .add("status", order.getStatus() + "")
                     .add("firstname", order.getFirstname() + "")
