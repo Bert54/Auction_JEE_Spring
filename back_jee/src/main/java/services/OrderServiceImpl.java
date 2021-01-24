@@ -57,11 +57,9 @@ public class OrderServiceImpl implements OrderService {
             case ORDERSTEPONE:
                 return this.updateOrderStatusSet(order, ORDERSTEPTWO);
             case ORDERSTEPTWO:
-                int status = this.communicationService.sendOrder(order.getId() + "");
-                if (status == 0) {
-                    return this.updateOrderStatusSet(order, ORDERSTEPTHREE);
-                }
-                break;
+                Order o = this.updateOrderStatusSet(order, ORDERSTEPTHREE);
+                this.communicationService.sendOrder(order.getId() + "");
+                return o;
             case ORDERSTEPTHREE:
                 this.communicationService.sendOrder(order.getId() + "");
         }
