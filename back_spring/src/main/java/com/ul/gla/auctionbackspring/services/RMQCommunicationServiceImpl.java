@@ -16,6 +16,7 @@ public class RMQCommunicationServiceImpl implements RMQCommunicationService{
     private final Channel channel;
 
     private final static String QUEUE_NAME_SEND = "OrderQueueSend";
+    private final static String QUEUE_NAME_SEND_CONFIRMATION = "OrderQueueConfirmation";
     private final static String QUEUE_NAME_RECEIVE = "OrderQueueReceive";
 
     @Autowired
@@ -30,16 +31,25 @@ public class RMQCommunicationServiceImpl implements RMQCommunicationService{
         factory.setHost("localhost");
         factory.setPort(5672);
         Connection connection = factory.newConnection();
-        this.channel = connection.createChannel();
+        this.channel =  connection.createChannel();
         channel.queueDeclare(QUEUE_NAME_SEND, false, false, false, null);
+        channel.queueDeclare(QUEUE_NAME_SEND_CONFIRMATION, false, false, false, null);
         channel.queueDeclare(QUEUE_NAME_RECEIVE, false, false, false, null);
-        DeliverCallback deliverCallback = (consumerTag, delivery) -> {
+        DeliverCallback deliverCallbackreceive = (consumerTag, delivery) -> {
             String message = new String(delivery.getBody(), "UTF-8");
             System.out.println(" [x] Received order '" + message + "' from shipping application");
             this.receiveOrderShippingConfirmation(message);
         };
-        channel.basicConsume(QUEUE_NAME_RECEIVE, true, deliverCallback, consumerTag -> { });
+        channel.basicConsume(QUEUE_NAME_RECEIVE, true, deliverCallbackreceive, consumerTag -> { });
+
+        DeliverCallback deliverCallbackconfirmation = (consumerTag, delivery) -> {
+            String message = new String(delivery.getBody(), "UTF-8");
+            System.out.println(" [x] Received order confirmation for order '" + message + "' from shipping application");
+            this.confirmOrderReceptionShippingApplication(message);
+        };
+        channel.basicConsume(QUEUE_NAME_SEND_CONFIRMATION, true, deliverCallbackconfirmation, consumerTag -> { });
     }
+
     @Override
     public int sendOrder(String id) {
         try {
@@ -55,6 +65,13 @@ public class RMQCommunicationServiceImpl implements RMQCommunicationService{
             return;
         }
         this.orderService.updateOrderFromShippingApplication(Long.parseLong(orderId));
+    }
+
+    private void confirmOrderReceptionShippingApplication(String orderId) {
+        if (!isNumeric(orderId)) {
+            return;
+        }
+        this.orderService.confirmOrderReceptionFromShippingApplication(Long.parseLong(orderId));
     }
 
     private boolean isNumeric(String numberToCheck) {

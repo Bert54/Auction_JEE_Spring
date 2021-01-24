@@ -11,8 +11,9 @@ public class OrderServiceImpl implements OrderService{
 
     private static final String ORDERSTEPONE = "Order sent";
     private static final String ORDERSTEPTWO = "Order confirmed";
-    private static final String ORDERSTEPTHREE = "Order awaiting shipment";
-    private static final String ORDERSTEPFOUR = "Order shipped";
+    private static final String ORDERSTEPTHREE = "Order awaiting shipment (not managed)";
+    private static final String ORDERSTEPFOUR = "Order awaiting shipment";
+    private static final String ORDERSTEPFIVE = "Order shipped";
 
     @Autowired
     private OrderRepository orderDao;
@@ -54,12 +55,11 @@ public class OrderServiceImpl implements OrderService{
             case ORDERSTEPONE:
                 return this.updateOrderStatusSet(order, ORDERSTEPTWO);
             case ORDERSTEPTWO:
-                int status = this.communicationService.sendOrder(order.getId() + "");
-                if (status == 0) {
-                    return this.updateOrderStatusSet(order, ORDERSTEPTHREE);
-                }
-                break;
-                //return this.updateOrderStatusSet(order, ORDERSTEPTHREE);
+                Order o = this.updateOrderStatusSet(order, ORDERSTEPTHREE);
+                this.communicationService.sendOrder(order.getId() + "");
+                return o;
+            case ORDERSTEPTHREE:
+                this.communicationService.sendOrder(order.getId() + "");
 
         }
         return order;
@@ -69,9 +69,18 @@ public class OrderServiceImpl implements OrderService{
     public void updateOrderFromShippingApplication(long id) {
         Order order = this.orderDao.find(id);
         if (order != null) {
-            switch (order.getStatus()) {
-                case ORDERSTEPTHREE:
-                    this.updateOrderStatusSet(order, ORDERSTEPFOUR);
+            if (ORDERSTEPFOUR.equals(order.getStatus())) {
+                this.updateOrderStatusSet(order, ORDERSTEPFIVE);
+            }
+        }
+    }
+
+    @Override
+    public void confirmOrderReceptionFromShippingApplication(long id) {
+        Order order = this.orderDao.find(id);
+        if (order != null) {
+            if (ORDERSTEPTHREE.equals(order.getStatus())) {
+                this.updateOrderStatusSet(order, ORDERSTEPFOUR);
             }
         }
     }
