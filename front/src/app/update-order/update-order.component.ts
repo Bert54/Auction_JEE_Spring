@@ -13,6 +13,7 @@ export class UpdateOrderComponent implements OnInit {
 
   public static readonly ORDERSTEPONE = 'Order sent';
   public static readonly ORDERSTEPTWO = 'Order confirmed';
+  public static readonly ORDERSTEPTHREE = 'Order awaiting shipment (not managed)';
 
   private _order: Order;
 
