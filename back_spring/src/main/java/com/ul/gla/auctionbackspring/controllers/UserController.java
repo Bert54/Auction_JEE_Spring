@@ -89,6 +89,15 @@ public class UserController {
         return "{\n\"username\":\"" + name +"\"\n}";
     }
 
+    @GetMapping(value= "/info", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public User getLoggedInUserInformations() {
+        User user = this.userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
+        return new User(user.getId(), user.getUsername(), null, user.getFirstName(), user.getLastName(),
+                user.getStreet(), user.getCity(), user.getPostcode(), user.getHouseNumber());
+    }
+
+
     private String issueToken(User user, String uri) {
         String keyString = JWTKey.key;
         Key key = new SecretKeySpec(keyString.getBytes(), 0, keyString.getBytes().length, "AES");
