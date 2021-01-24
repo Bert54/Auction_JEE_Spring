@@ -57,11 +57,13 @@ public class OrderServiceImpl implements OrderService{
         //On check si la date de timestamp est inférieur a 3 jour par rapport à aujourd'hui
         //on check si y a une promo effective sur la catégorie du produit
         Article article =  articleDao.find(newOrder.getArticleId());
+        newOrder.setPrice(article.getCurrentPrice());
         Offer offer;
         if(article.getEndingDate() + TIMEOFEFFECTIVEPROMOTION >= System.currentTimeMillis() / 1000 ){ //If the offer can be effective
             offer = offerDao.find();
             if(articleOfferGotOneCategorieInCommon(article, offer)){
-                double newPrice =  newOrder.getPrice() * (offer.getRebate() /100.0);//On fait la reduction sur l'OrderDto
+                double newPrice = newOrder.getPrice() - newOrder.getPrice() * (offer.getRebate() /100.0);//On fait la reduction sur l'OrderDto
+                newOrder.setPrice(newPrice);
             }
         }
         Order order = new Order(newOrder.getBuyer(), newOrder.getPrice(), newOrder.getArticleId(), ORDERSTEPONE, newOrder.getFirstname(),
