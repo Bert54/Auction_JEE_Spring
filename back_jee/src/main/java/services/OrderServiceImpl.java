@@ -13,8 +13,9 @@ public class OrderServiceImpl implements OrderService {
 
     private static final String ORDERSTEPONE = "Order sent";
     private static final String ORDERSTEPTWO = "Order confirmed";
-    private static final String ORDERSTEPTHREE = "Order awaiting shipment";
-    private static final String ORDERSTEPFOUR = "Order shipped";
+    private static final String ORDERSTEPTHREE = "Order awaiting shipment (not managed)";
+    private static final String ORDERSTEPFOUR = "Order awaiting shipment";
+    private static final String ORDERSTEPFIVE = "Order shipped";
 
     @Inject
     private OrderDao orderDao;
@@ -61,6 +62,8 @@ public class OrderServiceImpl implements OrderService {
                     return this.updateOrderStatusSet(order, ORDERSTEPTHREE);
                 }
                 break;
+            case ORDERSTEPTHREE:
+                this.communicationService.sendOrder(order.getId() + "");
         }
         return order;
     }
@@ -69,9 +72,18 @@ public class OrderServiceImpl implements OrderService {
     public void updateOrderFromShippingApplication(long id) {
         Order order = this.orderDao.find(id);
         if (order != null) {
-            switch (order.getStatus()) {
-                case ORDERSTEPTHREE:
-                    this.updateOrderStatusSet(order, ORDERSTEPFOUR);
+            if (ORDERSTEPFOUR.equals(order.getStatus())) {
+                this.updateOrderStatusSet(order, ORDERSTEPFIVE);
+            }
+        }
+    }
+
+    @Override
+    public void confirmOrderReceptionFromShippingApplication(long id) {
+        Order order = this.orderDao.find(id);
+        if (order != null) {
+            if (ORDERSTEPTHREE.equals(order.getStatus())) {
+                this.updateOrderStatusSet(order, ORDERSTEPFOUR);
             }
         }
     }

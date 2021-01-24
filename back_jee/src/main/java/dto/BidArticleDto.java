@@ -3,7 +3,7 @@ package dto;
 public class BidArticleDto {
 
     long id;
-    float amount;
+    double amount;
     String bidder;
 
     public long getId() {
@@ -14,11 +14,11 @@ public class BidArticleDto {
         this.id = id;
     }
 
-    public float getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(float amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 

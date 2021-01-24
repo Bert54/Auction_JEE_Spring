@@ -23,4 +23,6 @@ public interface OrderService {
 
     public void updateOrderFromShippingApplication(long id);
 
+    public void confirmOrderReceptionFromShippingApplication(long id);
+
 }
