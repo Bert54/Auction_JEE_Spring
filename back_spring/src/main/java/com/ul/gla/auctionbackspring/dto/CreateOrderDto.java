@@ -4,6 +4,8 @@ public class CreateOrderDto {
 
     String buyer;
 
+    double price;
+
     long articleId;
 
     String firstname;
@@ -17,6 +19,7 @@ public class CreateOrderDto {
     int zipcode;
 
     String city;
+
 
     public String getBuyer() {
         return buyer;
@@ -80,5 +83,12 @@ public class CreateOrderDto {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public double getPrice() {return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 }

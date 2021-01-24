@@ -97,8 +97,7 @@ public class OrderController {
 
     @GetMapping(value = "/received")
     public Iterable<Order> getOrdersToProcess() {
-        Iterable<Order> orders = this.orderService.getOrdersBySeller(SecurityContextHolder.getContext().getAuthentication().getName());
-        return orders;
+        return this.orderService.getOrdersBySeller(SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
     @PutMapping(value = "/received/update/{id}")
@@ -124,24 +123,5 @@ public class OrderController {
         }
         return order;
     }
-
-    /*private JsonArrayBuilder buildJsonArrayOrder(List<Order> orders) {
-        final Map<String, ?> config = Collections.emptyMap();
-        JsonBuilderFactory factory = Json.createBuilderFactory(config);
-        JsonArrayBuilder ordersJson = factory.createArrayBuilder();
-        for (Order order : orders) {
-            ordersJson.add(factory.createObjectBuilder()
-                    .add("id", order.getId())
-                    .add("buyer", order.getBuyer() + "")
-                    .add("articleId", order.getArticleId())
-                    .add("status", order.getStatus() + "")
-                    .add("firstname", order.getFirstname() + "")
-                    .add("lastname", order.getLastname() + "")
-                    .add("street", order.getStreet() + "")
-                    .add("zipcode", order.getZipcode())
-                    .add("city", order.getCity() + ""));
-        }
-        return ordersJson;
-    }*/
 
 }
