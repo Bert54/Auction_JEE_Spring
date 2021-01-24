@@ -17,6 +17,9 @@ public class OrderServiceImpl implements OrderService{
     @Autowired
     private OrderRepository orderDao;
 
+    @Autowired
+    private RMQCommunicationService communicationService;
+
     @Override
     public Iterable<Order> getOrdersByUsername(String username) {
         return this.orderDao.findAll(username);
@@ -51,11 +54,26 @@ public class OrderServiceImpl implements OrderService{
             case ORDERSTEPONE:
                 return this.updateOrderStatusSet(order, ORDERSTEPTWO);
             case ORDERSTEPTWO:
-                return this.updateOrderStatusSet(order, ORDERSTEPTHREE);
-            case ORDERSTEPTHREE:
-                return this.updateOrderStatusSet(order, ORDERSTEPFOUR);
+                int status = this.communicationService.sendOrder(order.getId() + "");
+                if (status == 0) {
+                    return this.updateOrderStatusSet(order, ORDERSTEPTHREE);
+                }
+                break;
+                //return this.updateOrderStatusSet(order, ORDERSTEPTHREE);
+
         }
         return order;
+    }
+
+    @Override
+    public void updateOrderFromShippingApplication(long id) {
+        Order order = this.orderDao.find(id);
+        if (order != null) {
+            switch (order.getStatus()) {
+                case ORDERSTEPTHREE:
+                    this.updateOrderStatusSet(order, ORDERSTEPFOUR);
+            }
+        }
     }
 
     private Order updateOrderStatusSet(Order order, String newStatus) {

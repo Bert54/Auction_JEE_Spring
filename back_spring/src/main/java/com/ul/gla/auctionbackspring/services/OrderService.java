@@ -19,4 +19,5 @@ public interface OrderService {
 
     public Order updateOrder(Order order);
 
+    void updateOrderFromShippingApplication(long id);
 }
