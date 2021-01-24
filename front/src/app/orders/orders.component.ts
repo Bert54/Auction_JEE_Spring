@@ -1,9 +1,13 @@
 /* tslint:disable:variable-name */
 import { Component, OnInit } from '@angular/core';
-import {OrdersService} from '../shared/services/orders.service';
-import {Order} from '../shared/interfaces/Order';
-import {ArticlesService} from '../shared/services/articles.service';
-import {Article} from '../shared/interfaces/Article';
+import { OrdersService } from '../shared/services/orders.service';
+import { Order } from '../shared/interfaces/Order';
+import { ArticlesService } from '../shared/services/articles.service';
+import { Article } from '../shared/interfaces/Article';
+import { Offer } from '../shared/interfaces/Offer';
+import { Router } from '@angular/router';
+import { MiscellaneousService } from '../shared/services/miscellaneous.service';
+import { Categories } from '../shared/data/categories';
 
 @Component({
   selector: 'app-orders',
@@ -17,7 +21,11 @@ export class OrdersComponent implements OnInit {
 
   private _articlesForSale: Article[];
 
-  constructor(private _ordersService: OrdersService, private _articleService: ArticlesService) {
+  private _currentOffer: Offer;
+
+  constructor(private _ordersService: OrdersService, private _articleService: ArticlesService,
+              private _miscellaneousService: MiscellaneousService) {
+    this._currentOffer = {category: '', id: '', rebate: 0};
     this._orders = [];
     this._curArticles = [];
     this._articlesForSale = [];
@@ -40,6 +48,10 @@ export class OrdersComponent implements OnInit {
       articles => this._articlesForSale = articles,
       err => console.log (err),
     );
+    this._miscellaneousService.getCurrentOffer().subscribe(
+      offer => this._currentOffer = offer,
+      err => console.log(err)
+    );
   }
 
   public get orders(): Order[] {
@@ -57,6 +69,20 @@ export class OrdersComponent implements OnInit {
       }
     }
     return {} as Article;
+  }
+
+  public isRebateApplicable(article: Article): boolean {
+    const categories = Categories;
+    const articleCategories = article.categories.split(',');
+    if (article.endingDate > Math.floor(Date.now() / 1000) + 259200) {
+      return false;
+    }
+    for (let i = 0 ; i < categories.length ; i++) {
+      if (articleCategories.includes(categories[i])) {
+        return true;
+      }
+    }
+    return false;
   }
 
 }

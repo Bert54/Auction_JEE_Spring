@@ -8,4 +8,5 @@ export interface Order {
   street: string;
   zipcode: number;
   city: string;
+  price?: number;
 }

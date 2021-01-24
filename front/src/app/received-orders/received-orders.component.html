@@ -4,7 +4,7 @@
     <div mat-line><strong>{{ fetchArticle(order.articleId).name }}</strong></div>
     <div mat-line>Order ID: {{ order.id }}</div>
     <div mat-line>Description: {{ fetchArticle(order.articleId).description }}</div>
-    <div mat-line>Price: {{ fetchArticle(order.articleId).currentPrice | number:'1.2-2' }}€</div>
+    <div mat-line>Price: {{ order.price | number:'1.2-2' }}€</div>
     <div mat-line>Buyer: {{ order.buyer }}</div>
     <div mat-line>Status: <u>{{ order.status }}</u></div>
     <div mat-line>
