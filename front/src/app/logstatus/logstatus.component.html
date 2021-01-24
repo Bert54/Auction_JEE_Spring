@@ -1,33 +1,80 @@
 <section style="margin-bottom: 10px;" >
-  <span *ngIf="isLoggedIn">
-    <p>You are logged in as {{ userName }}</p>
-    <button mat-stroked-button color="primary" style="margin-bottom: 10px" (click)="logOut()">
-      Logout
-    </button>
-    <p><a [routerLink]="['/home']">Home page</a></p>
-    <p><a [routerLink]="['/articles/search']">Browse articles</a></p>
-    <p><a [routerLink]="['/articles']">My articles</a></p>
-    <p><a [routerLink]="['/articles/mybids']">My auctions</a></p>
-    <p><a [routerLink]="['/orders']">My orders</a></p>
-    <p><a [routerLink]="['/orders/received/all']">Received orders</a></p>
-    <div *ngIf="offerRebate > 0 && offerCategory !== ''">
-      <p>Offer of the day: <strong>{{ offerRebate }}% off</strong> on <strong>{{ offerCategory }}</strong> articles</p>
-      <p>Order an item of this category of an auction you won and receive a rebate! (valid only within the 3 first days
-        following the end of the auction)</p>
-    </div>
-  </span>
-  <span *ngIf="!isLoggedIn">
-    <p>You are not logged in</p>
-    <p>
-      <button mat-stroked-button color="primary" [routerLink]="['/signup']">
-        Register
+  <mat-toolbar [class.mat-elevation-z12]="true" class="extend-toolbar">
+
+    <span>
+      <a [routerLink]="['/home']"><img src="assets/bid.png" width="150" height="100"></a>
+    </span>
+
+    <span class="flex"></span>
+
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>Menu Item 1</button>
+      <button mat-menu-item>Menu Item 2</button>
+    </mat-menu>
+
+    <span *ngIf="isLoggedIn">
+  <!--    <p>You are logged in as {{ userName }}</p>-->
+      <p>{{ userName }}
+        <button class="button" (click)="logOut()">
+          Logout
+        </button>
+
+
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>menu</mat-icon>
       </button>
-      <button mat-stroked-button color="primary" [routerLink]="['/login']">
-        Login
-      </button>
-    </p>
-    <p><a [routerLink]="['/home']">Home page</a></p>
-    <p><a [routerLink]="['/articles/search']">Browse articles</a></p>
-  </span>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          <a [routerLink]="['/articles']">My articles</a>
+        </button>
+        <button mat-menu-item>
+          <a [routerLink]="['/articles/mybids']">My auctions</a>
+        </button>
+        <button mat-menu-item>
+          <a [routerLink]="['/orders']">My orders</a>
+        </button>
+        <button mat-menu-item>
+          <a [routerLink]="['/orders/received/all']">Received orders</a>
+        </button>
+      </mat-menu>
+      </p>
+    </span>
+
+
+    <span *ngIf="!isLoggedIn">
+      <!-- <p> Your not logged in </p> -->
+      <p>
+        <button class="button" [routerLink]="['/signup']">
+          Register
+        </button>
+        <button class="button" [routerLink]="['/login']">
+          Login
+        </button>
+      </p>
+      <!-- <p><a [routerLink]="['/home']">Home page</a></p> -->
+    </span>
+
+
+
+  </mat-toolbar>
+
+  <p class="p">
+    <img src="assets/search_blue.svg" width="20" height="20" />
+    <a [routerLink]="['/articles/search']">Browse articles</a>
+  </p>
+
+<!--  <p><a [routerLink]="['/home']">Home page</a></p>-->
+<!--  <p><a [routerLink]="['/articles/search']">Browse articles</a></p>-->
+<!--  <p><a [routerLink]="['/articles']">My articles</a></p>-->
+<!--  <p><a [routerLink]="['/articles/mybids']">My auctions</a></p>-->
+<!--  <p><a [routerLink]="['/orders']">My orders</a></p>-->
+<!--  <p><a [routerLink]="['/orders/received/all']">Received orders</a></p>-->
+  <div style="margin-left: 10px;" *ngIf="offerRebate > 0 && offerCategory !== ''">
+    <p>Offer of the day: <strong>{{ offerRebate }}% off</strong> on <strong>{{ offerCategory }}</strong> articles</p>
+    <p>Order an item of this category of an auction you won and receive a rebate! (valid only within the 3 first days
+      following the end of the auction)</p>
+  </div>
+
   <mat-divider></mat-divider>
+
 </section>

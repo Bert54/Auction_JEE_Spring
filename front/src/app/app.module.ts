@@ -18,6 +18,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { ArticlesComponent } from './articles/articles.component';
 import { LogstatusComponent } from './logstatus/logstatus.component';
 import { MatListModule} from '@angular/material/list';
+import {MatMenuModule} from '@angular/material/menu';
 import { ArticleComponent } from './article/article.component';
 import { AddArticleComponent } from './add-article/add-article.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -36,6 +37,7 @@ import { OrderComponent } from './order/order.component';
 import { CreateOrderComponent } from './create-order/create-order.component';
 import { UpdateOrderComponent } from './update-order/update-order.component';
 import { ReceivedOrdersComponent } from './received-orders/received-orders.component';
+import {MatToolbarModule} from "@angular/material/toolbar";
 
 
 @NgModule({
@@ -76,6 +78,8 @@ import { ReceivedOrdersComponent } from './received-orders/received-orders.compo
     NgxMatTimepickerModule,
     MatOptionModule,
     MatSelectModule,
+    MatToolbarModule,
+    MatMenuModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},

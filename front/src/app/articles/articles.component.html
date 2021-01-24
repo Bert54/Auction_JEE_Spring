@@ -1,6 +1,5 @@
 <h1>My articles</h1>
 <section>
-  <button mat-raised-button color="primary" [routerLink]="['new']">Add article for sale</button>
   <mat-list>
     <mat-list-item *ngFor="let article of articles">
       <div mat-line><strong>{{ article.name }}</strong></div>
@@ -14,4 +13,7 @@
       <mat-divider></mat-divider>
     </mat-list-item>
   </mat-list>
+
+  <button style="margin-top: 10px;" mat-raised-button color="primary" [routerLink]="['new']">Add article for sale</button>
+
 </section>
