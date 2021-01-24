@@ -17,7 +17,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public List<User> find(String username) {
         TypedQuery<User> query = this.entityManager.getEntityManager().createQuery(
-                "SELECT u FROM User AS u WHERE u.username = :username", User.class)
+                "SELECT u FROM User AS u WHERE LOWER(u.username) = LOWER(:username)", User.class)
                 .setParameter("username", username);
         return query.getResultList();
     }
