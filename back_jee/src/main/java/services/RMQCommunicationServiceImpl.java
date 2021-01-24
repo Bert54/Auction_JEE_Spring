@@ -43,6 +43,7 @@ public class RMQCommunicationServiceImpl implements RMQCommunicationService {
         channel.basicConsume(QUEUE_NAME_RECEIVE, true, deliverCallback, consumerTag -> { });
     }
 
+    @Override
     public int sendOrder(String id) {
         try {
             channel.basicPublish("", QUEUE_NAME_SEND, null, id.getBytes());
