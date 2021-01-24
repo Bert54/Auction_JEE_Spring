@@ -61,10 +61,19 @@ public class OrderServiceImpl implements OrderService {
                     return this.updateOrderStatusSet(order, ORDERSTEPTHREE);
                 }
                 break;
-            case ORDERSTEPTHREE:
-                return this.updateOrderStatusSet(order, ORDERSTEPFOUR);
         }
         return order;
+    }
+
+    @Override
+    public void updateOrderFromShippingApplication(long id) {
+        Order order = this.orderDao.find(id);
+        if (order != null) {
+            switch (order.getStatus()) {
+                case ORDERSTEPTHREE:
+                    this.updateOrderStatusSet(order, ORDERSTEPFOUR);
+            }
+        }
     }
 
     private Order updateOrderStatusSet(Order order, String newStatus) {

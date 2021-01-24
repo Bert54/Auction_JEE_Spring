@@ -4,8 +4,10 @@ package services;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
+import com.rabbitmq.client.DeliverCallback;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
@@ -18,6 +20,8 @@ public class RMQCommunicationServiceImpl implements RMQCommunicationService {
     private final static String QUEUE_NAME_SEND = "OrderQueueSend";
     private final static String QUEUE_NAME_RECEIVE = "OrderQueueReceive";
 
+    @Inject
+    private OrderService orderService;
 
     public RMQCommunicationServiceImpl() throws IOException, TimeoutException {
         ConnectionFactory factory = new ConnectionFactory();
@@ -31,6 +35,12 @@ public class RMQCommunicationServiceImpl implements RMQCommunicationService {
         this.channel =  connection.createChannel();
         channel.queueDeclare(QUEUE_NAME_SEND, false, false, false, null);
         channel.queueDeclare(QUEUE_NAME_RECEIVE, false, false, false, null);
+        DeliverCallback deliverCallback = (consumerTag, delivery) -> {
+            String message = new String(delivery.getBody(), "UTF-8");
+            System.out.println(" [x] Received order '" + message + "' from shipping application");
+            this.receiveOrderShippingConfirmation(message);
+        };
+        channel.basicConsume(QUEUE_NAME_RECEIVE, true, deliverCallback, consumerTag -> { });
     }
 
     public int sendOrder(String id) {
@@ -40,6 +50,25 @@ public class RMQCommunicationServiceImpl implements RMQCommunicationService {
             return -1;
         }
         return 0;
+    }
+
+    private void receiveOrderShippingConfirmation(String orderId) {
+        if (!isNumeric(orderId)) {
+            return;
+        }
+        this.orderService.updateOrderFromShippingApplication(Long.parseLong(orderId));
+    }
+
+    private boolean isNumeric(String numberToCheck) {
+        if (numberToCheck == null) {
+            return false;
+        }
+        try {
+            long l = Long.parseLong(numberToCheck);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
     }
 
 }

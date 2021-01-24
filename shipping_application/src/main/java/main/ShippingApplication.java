@@ -6,6 +6,7 @@ import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.DeliverCallback;
 
 import java.io.IOException;
+import java.util.Scanner;
 import java.util.concurrent.TimeoutException;
 
 public class ShippingApplication {
@@ -29,9 +30,29 @@ public class ShippingApplication {
         channel.queueDeclare(QUEUE_NAME_RECEIVE, false, false, false, null);
         DeliverCallback deliverCallback = (consumerTag, delivery) -> {
             String message = new String(delivery.getBody(), "UTF-8");
-            System.out.println(" [x] Received '" + message + "'");
+            System.out.println(" [x] Received order '" + message + "' from auctions application.");
         };
         channel.basicConsume(QUEUE_NAME_SEND, true, deliverCallback, consumerTag -> { });
+        mainLoop();
+    }
+
+    public static void mainLoop() {
+        boolean exit = false;
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Enter the ID of the order you wish confirm shipment for.");
+        System.out.println("Enter 'exit' to exit the application.");
+        while (true) {
+            String userInput = scan.nextLine();
+            try {
+                long orderId = Long.parseLong(userInput);
+                channel.basicPublish("", QUEUE_NAME_RECEIVE, null, userInput.getBytes());
+                System.out.println("Input successfully sent.");
+            } catch (NumberFormatException nfe) {
+                System.out.println("Your input is not a number.");
+            } catch (IOException e) {
+                System.out.println("AN error occured while sending order id to auctions application.");
+            }
+        }
     }
 
 }
