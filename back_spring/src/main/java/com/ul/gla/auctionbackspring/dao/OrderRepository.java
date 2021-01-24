@@ -1,8 +1,10 @@
 package com.ul.gla.auctionbackspring.dao;
 
 import com.ul.gla.auctionbackspring.entities.Order;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.TypedQuery;
 import java.util.List;
@@ -23,6 +25,8 @@ public interface OrderRepository extends CrudRepository<Order, Integer> {
 
     public Order save(Order order);
 
+    @Transactional
+    @Modifying
     @Query("UPDATE Order o SET o.status = :newStatus WHERE o.id = :id")
     public int update(long id, String newStatus);
 
