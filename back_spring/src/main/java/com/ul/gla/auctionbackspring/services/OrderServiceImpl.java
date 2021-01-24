@@ -57,13 +57,14 @@ public class OrderServiceImpl implements OrderService{
         //On check si la date de timestamp est inférieur a 3 jour par rapport à aujourd'hui
         //on check si y a une promo effective sur la catégorie du produit
         Article article =  articleDao.find(newOrder.getArticleId());
-
+        Offer offer;
         if(article.getEndingDate() + TIMEOFEFFECTIVEPROMOTION >= System.currentTimeMillis() / 1000 ){ //If the offer can be effective
-            if(articleOfferGotOneCategorieInCommon(article, offerDao.find())){
-                //Ofait la reduction sur l'OrderDto
+            offer = offerDao.find();
+            if(articleOfferGotOneCategorieInCommon(article, offer)){
+                double newPrice =  newOrder.getPrice() * (offer.getRebate() /100.0);//On fait la reduction sur l'OrderDto
             }
         }
-        Order order = new Order(newOrder.getBuyer(), newOrder.getArticleId(), ORDERSTEPONE, newOrder.getFirstname(),
+        Order order = new Order(newOrder.getBuyer(), newOrder.getPrice(), newOrder.getArticleId(), ORDERSTEPONE, newOrder.getFirstname(),
                 newOrder.getLastname(), newOrder.getStreetNumber() + " " + newOrder.getStreetName(),
                 newOrder.getZipcode(), newOrder.getCity());
         return this.orderDao.save(order);
@@ -72,8 +73,8 @@ public class OrderServiceImpl implements OrderService{
 
     /**
      * Compare the categorie of the two
-     * @param article
-     * @param offer
+     * @param article an article
+     * @param offer an offer
      * @return true if there is a match
      */
     private boolean articleOfferGotOneCategorieInCommon(Article article, Offer offer){
@@ -96,13 +97,12 @@ public class OrderServiceImpl implements OrderService{
      * @return boolean true if there is a match
      */
     private boolean compareCategories(String[] articleCategories, String offerCategorie){
-        boolean res = false;
         for(String a : articleCategories){
             if(a.equals(offerCategorie)){
-                res = true;
+                return  true;
             }
         }
-        return res;
+        return false;
     }
 
     @Override
@@ -146,7 +146,7 @@ public class OrderServiceImpl implements OrderService{
         if (updated == 0) {
             return null;
         }
-        return new Order(order.getId(), order.getBuyer(), order.getArticleId(), newStatus, order.getFirstname(),
+        return new Order(order.getId(), order.getBuyer(), order.getPrice(), order.getArticleId(), newStatus, order.getFirstname(),
                 order.getLastname(), order.getStreet(), order.getZipcode(), order.getCity());
     }
 
