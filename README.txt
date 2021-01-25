@@ -1,6 +1,7 @@
 Pour exécuter le projet, vous avez besoin de :
 Angular 10+ pour le front-end (nécessite Node.js)
-Java 8+ pour les back-ends
+Java 8 pour glassfish
+Java 8+ pour les backs
 MySQL pour la base de données
 RabbitMQ Server pour la communication asynchrone
 Un IDE (IntelliJ Ultimate de préférence) pour déployer les applications back-end
@@ -31,7 +32,7 @@ Notez qu’il est impératif que le serveur de messagerie soit lancé et tourne 
 
 Configuration du serveur d’applications
 
-Le back-end JEE nécessite un serveur d’application afin de pouvoir fonctionner. Celui-ci doit également être configuré afin de pouvoir utiliser les transactions JTA. Nous allons expliquer comment procéder avec Glassfish 5. Si vous utilisez un autre serveur, vous devrez trouver comment faire par vous-même.
+Le back-end JEE nécessite un serveur d’application afin de pouvoir fonctionner. Celui-ci doit également être configuré afin de pouvoir utiliser les transactions JTA. Nous allons expliquer comment procéder avec Glassfish 5.
 
 Vous allez tout d’abord devoir ajouter le connecteur MySQL (en .jar) aux libs de Glassfish. Nous vous recommandons de télécharger la version 5.1 du connecteur (par soucis de compatibilité) que vous devrez placer sous *glassfish_install*/glassfish/domains/domain1/lib/
 Redémarrer ensuite le serveur si celui-ci tourne.
@@ -42,6 +43,7 @@ Cherchez le paramètre “UseSSL” puis le set à “false”.
 Cherchez le paramètre “User” et le set à “user”.
 Cherchez le paramètre “Password” et le set à “password”.
 Cherchez les deux champs “URL” et set les deux à “jdbc:mysql://localhost:3306/gla”.
+Cherchez le paramètre "AllowPublicKeyRetrieval" et le set a "true"
 Cliquez sur “Finish”.
 Il ne reste plus qu’à créer une ressource JDBC qui va utiliser le pool que vous venez de créer. Dans le menu à gauche, sélectionnez “Resources”, puis “JDBC”, puis “JDBC Resources”. Cliquez sur “New”.
 Dans “JNDI Name”, saisir “jdbc/mysqlpool”. Dans Pool Name, sélectionnez la pool que vous venez de créer (“mysqlpool” si vous avez saisi le nom indiqué au-dessus).
@@ -51,7 +53,7 @@ Le serveur est maintenant prêt.
 
 Déploiement du back-end JEE.
 
-Nous allons maintenant vous expliquer comment build et déployer le back-end JEE sur Glassfish en utilisant IntelliJ Ultimate. Si vous utilisez un autre IDE, vous devrez vous débrouiller par vous-même.
+Nous allons maintenant vous expliquer comment build et déployer le back-end JEE sur Glassfish en utilisant IntelliJ Ultimate.Il n'y à pas de tutoriel disponible pour d'autre IDE.
 
 Tout d’abord, assurez-vous que le serveur Glassfish est éteint. Ensuite, importez le projet Maven dans IntelliJ. Assurez-vous que le projet utilise bien un JDK 8+.
 Vous allez maintenant ajouter une nouvelle configuration. C’est celle-ci qui vous permettra de démarrer le serveur et de déployer l’application, le tout automatiquement.
