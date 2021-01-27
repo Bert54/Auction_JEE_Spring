@@ -24,16 +24,16 @@
         <mat-icon>menu</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item [routerLink]="['/articles']">
+        <button class="button_menu" mat-menu-item [routerLink]="['/articles']">
          My articles
         </button>
-        <button mat-menu-item [routerLink]="['/articles/mybids']">
+        <button class="button_menu" mat-menu-item [routerLink]="['/articles/mybids']">
           My auctions
         </button>
-        <button mat-menu-item [routerLink]="['/orders']">
+        <button class="button_menu" mat-menu-item [routerLink]="['/orders']">
          My orders
         </button>
-        <button mat-menu-item [routerLink]="['/orders/received/all']">
+        <button class="button_menu" mat-menu-item [routerLink]="['/orders/received/all']">
           Received orders
         </button>
       </mat-menu>
